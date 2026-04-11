@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -13,66 +12,42 @@ const Footer = () => {
     }
   };
 
-  const socials = [
-    { label: "Twitter", href: "#" },
-    { label: "LinkedIn", href: "#" },
-    { label: "GitHub", href: "#" },
-  ];
-
   return (
     <footer className="border-t border-border mt-32">
-      <div className="max-w-5xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12">
+      <div className="max-w-3xl mx-auto px-6 py-12">
         {/* Newsletter */}
-        <div>
-          <h3 className="font-display text-2xl mb-2">Stay in the loop</h3>
-          <p className="text-muted-foreground mb-6">Occasional thoughts on building, shipped straight to your inbox.</p>
+        <div className="mb-10">
+          <p className="text-sm font-medium mb-1">Newsletter</p>
+          <p className="text-sm text-muted-foreground mb-4">Occasional thoughts on building.</p>
           {subscribed ? (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-primary font-medium"
-            >
-              You're in! ✦ Thanks for subscribing.
-            </motion.p>
+            <p className="text-sm text-foreground">Thanks for subscribing.</p>
           ) : (
-            <form onSubmit={handleSubmit} className="flex gap-2">
+            <form onSubmit={handleSubmit} className="flex gap-2 max-w-sm">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@email.com"
                 required
-                className="flex-1 h-11 rounded-lg border border-input bg-background px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring hoverable"
+                className="flex-1 h-9 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
               />
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <button
                 type="submit"
-                className="h-11 px-6 rounded-lg bg-primary text-primary-foreground font-medium text-sm hoverable"
+                className="h-9 px-4 rounded-md bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
               >
                 Subscribe
-              </motion.button>
+              </button>
             </form>
           )}
         </div>
 
-        {/* Social + copyright */}
-        <div className="flex flex-col justify-between items-start md:items-end">
-          <div className="flex gap-6 mb-6">
-            {socials.map((s) => (
-              <motion.a
-                key={s.label}
-                href={s.href}
-                whileHover={{ y: -2 }}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hoverable"
-              >
-                {s.label}
-              </motion.a>
-            ))}
+        <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex gap-5">
+            <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
+            <a href="#" className="hover:text-foreground transition-colors">LinkedIn</a>
+            <a href="#" className="hover:text-foreground transition-colors">GitHub</a>
           </div>
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} — Built with craft & care.
-          </p>
+          <span>© {new Date().getFullYear()}</span>
         </div>
       </div>
     </footer>
