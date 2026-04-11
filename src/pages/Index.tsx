@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import PageTransition from "@/components/PageTransition";
-import Marquee from "@/components/Marquee";
 import ProjectCard from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
 import { essays } from "@/data/essays";
@@ -25,8 +24,7 @@ const Index = () => {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="font-display text-6xl md:text-8xl leading-[0.95] mb-6"
         >
-          Your Name
-          <span className="text-primary">.</span>
+          E-Yong Lee<span className="text-primary">.</span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -34,7 +32,7 @@ const Index = () => {
           transition={{ delay: 0.4 }}
           className="text-xl md:text-2xl text-muted-foreground max-w-xl leading-relaxed"
         >
-          Building things that matter. Founder, thinker, and
+          Building things that matter. Founder and
           occasional writer sharing the journey.
         </motion.p>
 
@@ -46,43 +44,24 @@ const Index = () => {
         >
           <Link to="/projects">
             <motion.span
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-block px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hoverable"
+              className="inline-block px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium"
             >
               See my work
             </motion.span>
           </Link>
           <Link to="/essays">
             <motion.span
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-block px-6 py-3 rounded-lg border border-border font-medium hoverable"
+              className="inline-block px-6 py-3 rounded-lg border border-border font-medium"
             >
               Read essays
             </motion.span>
           </Link>
         </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="mt-auto pb-8 flex justify-center"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-5 h-8 rounded-full border-2 border-muted-foreground/30 flex justify-center pt-1"
-          >
-            <div className="w-1 h-2 rounded-full bg-muted-foreground/50" />
-          </motion.div>
-        </motion.div>
       </section>
-
-      {/* Marquee */}
-      <Marquee />
 
       {/* Projects preview */}
       <section className="max-w-5xl mx-auto px-6 py-24">
@@ -98,7 +77,7 @@ const Index = () => {
             </h2>
             <p className="text-muted-foreground mt-2">Things I'm building right now</p>
           </div>
-          <Link to="/projects" className="text-sm font-medium text-primary hoverable hidden md:block">
+          <Link to="/projects" className="text-sm font-medium text-primary hidden md:block">
             View all →
           </Link>
         </motion.div>
@@ -124,7 +103,7 @@ const Index = () => {
             </h2>
             <p className="text-muted-foreground mt-2">Thoughts on building & life</p>
           </div>
-          <Link to="/essays" className="text-sm font-medium text-primary hoverable hidden md:block">
+          <Link to="/essays" className="text-sm font-medium text-primary hidden md:block">
             Read all →
           </Link>
         </motion.div>
@@ -138,7 +117,7 @@ const Index = () => {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
             >
-              <Link to={`/essays/${essay.id}`} className="group block py-6 hoverable">
+              <Link to={`/essays/${essay.id}`} className="group block py-6">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="font-display text-xl md:text-2xl group-hover:text-primary transition-colors">
