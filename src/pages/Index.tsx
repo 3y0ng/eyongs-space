@@ -11,10 +11,10 @@ const Index = () => {
         {/* Hero */}
         <section className="mb-24">
           <h1 className="font-display text-4xl md:text-5xl leading-tight mb-6">
-            E-Yong Lee
+            Building tools that help people do their best work.
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-            Founder and builder. Sharing what I'm working on and what I'm thinking about.
+            Founder and builder — sharing what I'm working on and thinking about.
           </p>
         </section>
 
