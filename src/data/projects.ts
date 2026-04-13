@@ -1,6 +1,7 @@
 import givemapScreenshot from "@/assets/givemap-screenshot.png";
 import curiloScreenshot from "@/assets/curilo-screenshot.png";
 import leeEducationScreenshot from "@/assets/lee-education-screenshot.png";
+import pyreelScreenshot from "@/assets/pyreel-screenshot.png";
 
 export type ProjectStatus = "Active" | "Shipped" | "Exploring";
 
@@ -19,11 +20,12 @@ export const projects: Project[] = [
   {
     id: "pyreel",
     title: "Pyreel.ai",
-    tagline: "Agentic marketing orchestration for Slack & Teams",
+    tagline: "Agentic marketing orchestration",
     description: "A dual-platform agentic orchestration layer for marketing. Built using FastAPI and Celery, it automates end-to-end campaign execution from research to video asset generation.",
     status: "Active",
     color: "hsl(var(--primary))",
     link: "https://pyreel.ai",
+    image: pyreelScreenshot,
   },
   {
     id: "curilo",
