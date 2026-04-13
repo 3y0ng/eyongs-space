@@ -1,42 +1,63 @@
 
-# Personal Website for a Founder
 
-## Pages & Structure
+## Add Playful, Technical Personality to the Site
 
-### 1. Home / Landing
-- Bold hero with your name and a short tagline (e.g. "Building things that matter")
-- Custom cursor that reacts to hover states (dot that grows/morphs on interactive elements)
-- Scroll-triggered animations: elements fade/slide in as you scroll
-- A rotating/animated marquee strip with keywords about you
-- Quick preview cards linking to Projects and Essays sections
+The site is clean and minimal right now. The goal is to inject personality and signal technicality without losing the clean aesthetic. Here's the plan:
 
-### 2. Projects Page
-- Grid of project cards with rich hover effects (tilt, color shift, reveal description)
-- Each card shows: project name, one-line description, status badge (Active / Shipped / Exploring), and a link
-- Clicking a card opens a detail view with more info, images placeholder, and external links
-- Animated page transition (fade + slide) when navigating here
+### 1. CLI-style hero on the homepage
 
-### 3. Essays Page
-- Clean editorial layout — list of essays with title, date, and a short excerpt
-- Hover reveals a subtle color accent or underline animation
-- Clicking opens a full essay page with beautiful typography (large readable text, proper spacing)
-- Placeholder essays with lorem-style content
+Replace the current serif hero with a terminal-inspired intro. Monospaced font, blinking cursor, typed-out feel (but not a slow typewriter animation, just the aesthetic).
 
-### 4. About / Contact Section
-- Brief bio section on the home page or as a standalone section
-- Newsletter signup form (email input + subscribe button, stored locally for now — can wire to a backend later)
-- Social links with playful hover animations
+```text
+> eyong.status()
+{
+  role: "founder & builder",
+  building: ["pyreel.ai", "curilo.ai"],
+  previously: "tutoring @ 4 locations, property @ 19"
+}
+```
 
-## Design & Interactions
-- **Color palette**: Bold primary accent (electric blue or vibrant coral) against off-white/cream backgrounds with dark text
-- **Typography**: Mix of a display/serif font for headings and clean sans-serif for body
-- **Custom cursor**: Small dot that scales up on hover over interactive elements
-- **Page transitions**: Smooth fade + slide animations between routes using framer-motion
-- **Micro-interactions**: Cards tilt on hover, buttons have spring animations, scroll-triggered reveals
-- **Dark/light feel**: Light mode by default with bold accent pops
+Uses a dark card with green/amber accent text, monospace font, and a blinking cursor after the last line. The original tagline stays below in normal text.
 
-## Tech Approach
-- React + Tailwind + Framer Motion for animations
-- React Router for page transitions
-- All content as placeholder data (easy to swap later)
-- Fully responsive (mobile-friendly)
+### 2. Navbar name as a prompt
+
+Change "E-Yong Lee" in the navbar to `~/eyong $` or `eyong@web:~$` styled in monospace, giving the whole site a subtle CLI frame.
+
+### 3. Section labels as CLI comments
+
+Change the "PROJECTS" and "ESSAYS" section headers from uppercase labels to CLI-style comments:
+
+```text
+// projects
+// essays
+```
+
+Rendered in monospace, muted green, lowercase.
+
+### 4. Project status badges as terminal tags
+
+Instead of plain text status ("Active", "Shipped", "Exploring"), render them as inline code-style badges:
+
+```text
+[active]  [shipped]  [exploring]
+```
+
+Monospace, lowercase, with subtle color coding (green for active, muted for shipped, amber for exploring).
+
+### 5. Footer "last deployed" line
+
+Add a small monospace line at the bottom of the footer:
+
+```text
+last commit: 2026-04-13 · built with mass amounts of mass-produced caffeine
+```
+
+### Files to edit
+
+- `src/index.css` -- add monospace font import (JetBrains Mono or similar), `.font-mono` utility
+- `tailwind.config.ts` -- add `mono` font family
+- `src/pages/Index.tsx` -- CLI hero block, CLI-style section labels
+- `src/components/Navbar.tsx` -- prompt-style name
+- `src/components/ProjectCard.tsx` -- terminal-style status badges
+- `src/components/Footer.tsx` -- "last deployed" line
+
