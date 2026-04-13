@@ -37,11 +37,40 @@ const EssayDetail = () => {
         <div className="w-12 h-px bg-border mb-10" />
 
         <div className="space-y-6">
-          {essay.content.split("\n\n").map((paragraph, i) => (
-            <p key={i} className="leading-[1.8] text-foreground/80">
-              {paragraph}
-            </p>
-          ))}
+          {essay.content.split("\n\n").map((block, i) => {
+            const trimmed = block.trim();
+            
+            // Check if block is a list of bullet points
+            if (trimmed.includes("\n•") || trimmed.startsWith("•")) {
+              const items = trimmed.split("\n").filter(line => line.trim().startsWith("•"));
+              return (
+                <ul key={i} className="list-disc list-outside pl-5 space-y-3">
+                  {items.map((item, j) => (
+                    <li key={j} className="leading-[1.8] text-foreground/80">
+                      {item.replace(/^•\s*/, "")}
+                    </li>
+                  ))}
+                </ul>
+              );
+            }
+
+            // Check if block is a short line with no period (subheading)
+            const isSubheading = trimmed.length < 80 && !trimmed.endsWith(".") && !trimmed.endsWith(":") && !trimmed.startsWith("•") && trimmed.length > 0;
+            
+            if (isSubheading) {
+              return (
+                <h2 key={i} className="font-display text-xl md:text-2xl mt-4">
+                  {trimmed}
+                </h2>
+              );
+            }
+
+            return (
+              <p key={i} className="leading-[1.8] text-foreground/80">
+                {trimmed}
+              </p>
+            );
+          })}
         </div>
       </article>
     </PageTransition>
