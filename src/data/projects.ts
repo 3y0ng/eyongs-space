@@ -1,4 +1,5 @@
 import givemapScreenshot from "@/assets/givemap-screenshot.png";
+import curiloScreenshot from "@/assets/curilo-screenshot.png";
 
 export type ProjectStatus = "Active" | "Shipped" | "Exploring";
 
@@ -31,7 +32,7 @@ export const projects: Project[] = [
     status: "Active",
     color: "hsl(var(--primary))",
     link: "https://curilo.ai",
-  },
+    image: curiloScreenshot,
   {
     id: "givemap",
     title: "Givemap.quest",
