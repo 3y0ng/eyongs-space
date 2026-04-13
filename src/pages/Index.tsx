@@ -44,9 +44,6 @@ const Index = () => {
               {"}"}<span className="animate-blink ml-1">▌</span>
             </div>
           </div>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-            Building tools that help people do their best work.
-          </p>
         </section>
 
         {/* Projects */}
