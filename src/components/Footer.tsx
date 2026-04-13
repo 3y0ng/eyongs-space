@@ -68,7 +68,7 @@ const Footer = () => {
         </div>
 
         <p className="font-mono text-xs text-muted-foreground mt-6">
-          last commit: {new Date().toISOString().slice(0, 10)} · built with late nights and unreasonable optimism
+          last commit: {new Date().toISOString().slice(0, 10)} · built with leftover claude-code credits
         </p>
       </div>
     </footer>
