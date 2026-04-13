@@ -99,12 +99,38 @@ It is about remembering why writing ever mattered in the first place.`,
     title: "Buying My Second House at 19",
     excerpt: "Australian banks need a 10% deposit. I had $1,000. This taught me to test assumptions and push relentlessly.",
     date: "Mar 2026",
-    readTime: "3 min",
-    content: `At 19, I bought an $888k house with only $1,000. Australian banks need a 10% deposit, but I found this was a perception issue rather than a hard rule.
+    readTime: "5 min",
+    content: `At 19, I was juggling a university degree, an investment banking internship and a tutoring business I had built to support my family. I had $1,000 in the bank. And I decided to buy an $888,000 house.
 
-I cold called dozens of solicitors, brokers, and accountants until I found people willing to help me structure the deal so a lender would accept it. Once the support was in place, I was approved on Friday, inspected on Saturday, and signed on Monday.
+The Background
 
-This taught me to test assumptions and push relentlessly. Most barriers are not walls — they are doors that nobody has tried opening from the right angle.`,
+I had already bought my first property earlier that year. The original plan was to purchase the neighbouring lot as well, but that deal fell through. Instead of retreating, I started looking for something bigger. I was tired of feeling like I was working around the clock just to keep my family afloat. I wanted to build wealth for myself, not just earn an income.
+
+The problem was obvious. Australian banks typically require a 10% deposit plus stamp duty. On an $888k property, that is roughly $100,000 upfront. I had one per cent of that.
+
+Nobody Took Me Seriously
+
+When I started calling agents, vendors and brokers, most did not take me seriously. I was 19. I had no substantial savings. I looked, on paper, like someone who had no business being in the conversation.
+
+I heard every version of no. Too young. Not enough capital. Come back in a few years. Some people were polite about it. Others were not.
+
+But I kept calling. I believed the 10% deposit was a convention, not a hard rule. If I could find people willing to think creatively, there might be a structure that worked.
+
+Finding the Right People
+
+After dozens of calls, I found a broker, a solicitor and an accountant who were willing to work with me. They did not dismiss the idea. They asked how we could make it work.
+
+Together, we structured the deal around a refinance of my first property. The equity I had built allowed us to effectively finance the entire purchase, including stamp duty, without the standard deposit. It was unconventional, but it was legitimate. The key was finding professionals who understood that rules have more flexibility than most people assume.
+
+Friday, Saturday, Monday
+
+Once the team was in place, everything moved fast. I was approved on Friday, inspected the property on Saturday and signed on Monday. Three days from approval to contract. No hesitation.
+
+What I Learned
+
+Most people assume the barrier to entry is financial. In my case, the real barrier was social. It was the assumption, held by nearly everyone I spoke to, that someone my age could not and should not be doing this.
+
+The lesson was not about property. It was about testing assumptions. When you hear no repeatedly, you learn to distinguish between a hard constraint and a soft one. Most barriers are not walls. They are doors that nobody has tried opening from the right angle.`,
   },
   {
     id: "why-i-decided-to-risk-it-all",
