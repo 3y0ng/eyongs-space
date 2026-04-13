@@ -106,7 +106,9 @@ The Background
 
 I had already bought my first property earlier that year. The original plan was to purchase the neighbouring lot as well, but that deal fell through. Instead of retreating, I started looking for something bigger. I was tired of feeling like I was working around the clock just to keep my family afloat. I wanted to build wealth for myself, not just earn an income.
 
-The problem was obvious. Australian banks typically require a 10% deposit plus stamp duty. On an $888k property, that is roughly $100,000 upfront. I had one per cent of that.
+I knew I could service the mortgage. My tutoring business was generating strong cashflow. But the business was still early, and banks do not lend based on potential. Traditional finance requires years of documented income, established credit history and conventional employment. I had none of that on paper, even though the money was there every month.
+
+The problem was not affordability. It was legibility. Australian banks typically require a 10% deposit plus stamp duty. On an $888k property, that is roughly $100,000 upfront. I had one per cent of that.
 
 Nobody Took Me Seriously
 
