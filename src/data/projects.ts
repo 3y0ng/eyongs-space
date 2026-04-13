@@ -1,5 +1,6 @@
 import givemapScreenshot from "@/assets/givemap-screenshot.png";
 import curiloScreenshot from "@/assets/curilo-screenshot.png";
+import leeEducationScreenshot from "@/assets/lee-education-screenshot.png";
 
 export type ProjectStatus = "Active" | "Shipped" | "Exploring";
 
@@ -52,5 +53,6 @@ export const projects: Project[] = [
     status: "Shipped",
     color: "hsl(var(--secondary))",
     link: "https://lee.education",
+    image: leeEducationScreenshot,
   },
 ];
