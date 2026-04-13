@@ -33,6 +33,7 @@ export const projects: Project[] = [
     color: "hsl(var(--primary))",
     link: "https://curilo.ai",
     image: curiloScreenshot,
+  },
   {
     id: "givemap",
     title: "Givemap.quest",
