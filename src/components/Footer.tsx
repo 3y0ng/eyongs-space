@@ -49,6 +49,10 @@ const Footer = () => {
           </div>
           <span>© {new Date().getFullYear()}</span>
         </div>
+
+        <p className="font-mono text-xs text-muted-foreground mt-6">
+          last commit: {new Date().toISOString().slice(0, 10)} · built with mass amounts of mass-produced caffeine
+        </p>
       </div>
     </footer>
   );

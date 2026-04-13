@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -50,6 +51,10 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        terminal: {
+          green: "hsl(var(--terminal-green))",
+          amber: "hsl(var(--terminal-amber))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
