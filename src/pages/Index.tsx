@@ -18,7 +18,7 @@ const Index = () => {
             <div className="pl-4">
               <span className="text-terminal-amber">role</span>
               <span className="text-muted-foreground">: </span>
-              <span className="text-foreground">"founder & builder"</span>
+              <span className="text-foreground">"student & builder"</span>
               <span className="text-muted-foreground">,</span>
             </div>
             <div className="pl-4">
@@ -32,7 +32,7 @@ const Index = () => {
             <div className="pl-4">
               <span className="text-terminal-amber">previously</span>
               <span className="text-muted-foreground">: </span>
-              <span className="text-foreground">"tutoring @ 4 locations, property @ 19"</span>
+              <span className="text-foreground">"tutoring @ 4 locations, property @ 18"</span>
             </div>
             <div className="text-muted-foreground">
               {"}"}<span className="animate-blink ml-1">▌</span>
