@@ -30,9 +30,13 @@ const ProjectDetail = () => {
         <h1 className="font-display text-4xl mb-2">{project.title}</h1>
         <p className="text-muted-foreground mb-10">{project.tagline}</p>
 
-        <div className="w-full aspect-video rounded-lg bg-secondary mb-10 flex items-center justify-center">
-          <span className="text-sm text-muted-foreground">Screenshot placeholder</span>
-        </div>
+        {project.image ? (
+          <img src={project.image} alt={`${project.title} screenshot`} className="w-full rounded-lg mb-10" />
+        ) : (
+          <div className="w-full aspect-video rounded-lg bg-secondary mb-10 flex items-center justify-center">
+            <span className="text-sm text-muted-foreground">Screenshot placeholder</span>
+          </div>
+        )}
 
         <p className="text-foreground/80 leading-relaxed">{project.description}</p>
 

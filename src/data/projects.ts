@@ -1,3 +1,5 @@
+import givemapScreenshot from "@/assets/givemap-screenshot.png";
+
 export type ProjectStatus = "Active" | "Shipped" | "Exploring";
 
 export interface Project {
@@ -8,6 +10,7 @@ export interface Project {
   status: ProjectStatus;
   color: string;
   link: string;
+  image?: string;
 }
 
 export const projects: Project[] = [
@@ -37,6 +40,7 @@ export const projects: Project[] = [
     status: "Exploring",
     color: "hsl(var(--accent))",
     link: "https://givemap.quest",
+    image: givemapScreenshot,
   },
   {
     id: "lee-education",
