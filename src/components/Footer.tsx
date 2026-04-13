@@ -35,7 +35,7 @@ const Footer = () => {
         {/* Newsletter */}
         <div className="mb-10">
           <p className="text-sm font-medium mb-1">Newsletter</p>
-          <p className="text-sm text-muted-foreground mb-4">Occasional thoughts on building.</p>
+          <p className="text-sm text-muted-foreground mb-4">hear my occasional thoughts on building.</p>
           {subscribed ? (
             <p className="text-sm text-foreground">Thanks for subscribing.</p>
           ) : (
