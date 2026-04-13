@@ -139,16 +139,50 @@ The lesson was not about property. It was about testing assumptions. When you he
     title: "Why I Decided to Risk It All",
     excerpt: "Leaving a tutoring business doing $500k ARR and selling all property. Sunk cost, the region beta paradox, and choosing growth over comfort.",
     date: "Feb 2026",
-    readTime: "4 min",
+    readTime: "7 min",
     content: `I walked away from a tutoring business doing $500k in annual recurring revenue. I sold all my property. From the outside, it looked irrational. From the inside, it was the clearest decision I have ever made.
 
-The sunk cost was real. Years of work, relationships, reputation — all built around a model I had outgrown. But sunk cost is a trap precisely because it feels like value. It is not. It is weight.
+The Slow Build-Up
 
-There is a concept called the region beta paradox: moderate discomfort is harder to escape than extreme pain, because it never triggers the urgency to change. I was comfortable. The business was growing. I could see the next five years clearly — more tutoring centres, more property, more of the same. And that clarity terrified me. I could not see myself being happy. I could not see myself being more fulfilled.
+It was not a single moment. It was a feeling that accumulated over months, sharpened by certain experiences I could not unsee.
 
-I realised I was optimising for a life I did not want. The trajectory was legible, stable, and completely uninspiring. I was bored — not in the shallow sense, but in the deep sense of knowing that I was capable of more and choosing not to pursue it.
+During a winter internship in San Francisco, I met people my age who were building at a completely different scale. Peers getting into Y Combinator. Friends raising money on Shark Tank. Founders who were ambitious, talented and relentless. It was not jealousy. It was a yearning. I wanted to be part of that world, and I knew I never would be if I kept running tutoring centres in suburban Australia.
 
-So I made the trade. Security for growth. Comfort for uncertainty. A known ceiling for an unknown one. I wanted to build things at a larger scale. I wanted to work on problems that stretched me, not ones I had already solved.
+I came home and looked at what I had built. It was good. It was stable. It was growing. And I felt nothing.
+
+The Region Beta Paradox
+
+There is a concept called the region beta paradox. It describes how moderate discomfort is harder to escape than extreme pain, because it never triggers the urgency to change. If the business had been failing, the decision would have been easy. But it was succeeding, and that made it harder.
+
+I was comfortable. I could see the next five years clearly. More tutoring centres, more property, more of the same. And that clarity terrified me. I could not see myself being happy. I could not see myself being more fulfilled. I was optimising for a life I did not want.
+
+I was bored. Not in the shallow sense, but in the deep sense of knowing that I was capable of more and choosing not to pursue it.
+
+Sunk Cost
+
+The sunk cost was real. Years of work, relationships, reputation, all built around a model I had outgrown. Letting go of that felt like erasing part of my identity. I had built this business from my living room as a university freshman to support my family. It had grown to four locations. It had changed the trajectory of hundreds of students.
+
+But sunk cost is a trap precisely because it feels like value. It is not. It is weight. The time I had already invested was gone regardless. The only question that mattered was whether I wanted to spend the next five years the same way I had spent the last three.
+
+The Hardest Part
+
+The hardest thing to let go of was not the money or the status. It was the people. Students who relied on the program. Families who trusted me. A team I had trained and led. Walking away from them felt like a betrayal, even though I knew intellectually that the business could continue without me.
+
+I handed the reigns to my younger brother. He was capable, committed and ready. But the guilt of stepping back from something so personal was heavier than I expected.
+
+Everyone Thought I Was Crazy
+
+When I told people what I was doing, most thought I had lost my mind. Why would you leave something that is working? Why would you sell your properties? Why would you give up $500k a year at your age?
+
+I understood the logic. From the outside, I was throwing away everything I had built. But I had already done the math on what staying looked like, and the cost of comfort was higher than the cost of uncertainty.
+
+What I Walked Into
+
+I did not have a master plan. I was exploring multiple directions simultaneously, trying to find the problem that would stretch me the way the tutoring business once had. I wanted to build things at a larger scale. I wanted to work in technology. I wanted to be around people who made me feel like I was just getting started, not winding down.
+
+The Trade
+
+Security for growth. Comfort for uncertainty. A known ceiling for an unknown one.
 
 It is too early to say whether it was the right call. But I know this: the version of me that stayed would have been smaller. And I would rather fail at something that matters than succeed at something that does not.`,
   },
