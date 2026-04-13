@@ -64,7 +64,7 @@ const Footer = () => {
             <a href="https://www.linkedin.com/in/e-yong-lee/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
             <a href="https://github.com/3y0ng" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
           </div>
-          <span>© {new Date().getFullYear()}</span>
+          
         </div>
 
         <p className="font-mono text-xs text-muted-foreground mt-6">
