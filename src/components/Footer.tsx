@@ -50,9 +50,10 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="h-9 px-4 rounded-md bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
+                disabled={loading}
+                className="h-9 px-4 rounded-md bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
               >
-                Subscribe
+                {loading ? "..." : "Subscribe"}
               </button>
             </form>
           )}
