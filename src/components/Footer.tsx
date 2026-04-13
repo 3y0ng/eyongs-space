@@ -1,15 +1,32 @@
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
+    if (!email) return;
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from("newsletter_subscribers")
+        .insert({ email });
+      if (error && error.code === "23505") {
+        // Already subscribed
+        setSubscribed(true);
+      } else if (error) {
+        console.error("Subscription error:", error);
+      } else {
+        setSubscribed(true);
+      }
+    } catch (err) {
+      console.error("Subscription error:", err);
     }
+    setEmail("");
+    setLoading(false);
   };
 
   return (
@@ -33,9 +50,10 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="h-9 px-4 rounded-md bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
+                disabled={loading}
+                className="h-9 px-4 rounded-md bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
               >
-                Subscribe
+                {loading ? "..." : "Subscribe"}
               </button>
             </form>
           )}
