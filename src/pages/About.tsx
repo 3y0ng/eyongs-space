@@ -20,9 +20,6 @@ const About = () => {
             <p>
               I've since passed it on to my younger brother and moved into tech. Now I'm building AI products — Pyreel.ai for marketing orchestration and Curilo.ai for automated English writing feedback.
             </p>
-            <p>
-              I bought my first property at 18, my second at 19 with $1,000 in the bank. I like finding creative solutions to problems people say can't be solved.
-            </p>
           </div>
         </div>
 
@@ -32,31 +29,31 @@ const About = () => {
           </div>
           <div className="text-muted-foreground">{"{"}</div>
           <div className="pl-4">
-            <span className="text-terminal-amber">age</span>
-            <span className="text-muted-foreground">: </span>
-            <span className="text-foreground">20</span>
-            <span className="text-muted-foreground">,</span>
-          </div>
-          <div className="pl-4">
             <span className="text-terminal-amber">location</span>
             <span className="text-muted-foreground">: </span>
             <span className="text-foreground">"Australia"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
-            <span className="text-terminal-amber">companies_built</span>
+            <span className="text-terminal-amber">fuel</span>
             <span className="text-muted-foreground">: </span>
-            <span className="text-foreground">3</span>
+            <span className="text-foreground">"coffee + deadlines"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
-            <span className="text-terminal-amber">properties_bought</span>
+            <span className="text-terminal-amber">currently_obsessed_with</span>
             <span className="text-muted-foreground">: </span>
-            <span className="text-foreground">2</span>
+            <span className="text-foreground">"making LLMs do things they shouldn't"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
-            <span className="text-terminal-amber">current_stack</span>
+            <span className="text-terminal-amber">hot_take</span>
+            <span className="text-muted-foreground">: </span>
+            <span className="text-foreground">"most MVPs need fewer features, not more"</span>
+            <span className="text-muted-foreground">,</span>
+          </div>
+          <div className="pl-4">
+            <span className="text-terminal-amber">stack</span>
             <span className="text-muted-foreground">: [</span>
             <span className="text-foreground">"React"</span>
             <span className="text-muted-foreground">, </span>
@@ -64,6 +61,12 @@ const About = () => {
             <span className="text-muted-foreground">, </span>
             <span className="text-foreground">"LLMs"</span>
             <span className="text-muted-foreground">]</span>
+            <span className="text-muted-foreground">,</span>
+          </div>
+          <div className="pl-4">
+            <span className="text-terminal-amber">debug_strategy</span>
+            <span className="text-muted-foreground">: </span>
+            <span className="text-foreground">"console.log until it confesses"</span>
           </div>
           <div className="text-muted-foreground">{"}"}</div>
         </div>
