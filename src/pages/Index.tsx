@@ -1,53 +1,25 @@
 import { Link } from "react-router-dom";
 import PageTransition from "@/components/PageTransition";
 import ProjectCard from "@/components/ProjectCard";
+import TypingHero from "@/components/TypingHero";
 import { projects } from "@/data/projects";
 import { essays } from "@/data/essays";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const Index = () => {
+  const projectsRef = useScrollReveal<HTMLElement>();
+  const essaysRef = useScrollReveal<HTMLElement>({ delay: 100 });
+
   return (
     <PageTransition>
       <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
         {/* CLI Hero */}
         <section className="mb-24">
-          <div className="rounded-lg border border-border bg-card p-6 font-mono text-sm mb-6">
-            <div className="text-muted-foreground mb-2">
-              <span className="text-terminal-green">{">"}</span> eyong.status()
-            </div>
-            <div className="text-muted-foreground">{"{"}</div>
-            <div className="pl-4">
-              <span className="text-terminal-amber">role</span>
-              <span className="text-muted-foreground">: </span>
-              <span className="text-foreground">"student & builder"</span>
-              <span className="text-muted-foreground">,</span>
-            </div>
-            <div className="pl-4">
-              <span className="text-terminal-amber">building</span>
-              <span className="text-muted-foreground">: [</span>
-              <span className="text-foreground">"pyreel.ai"</span>
-              <span className="text-muted-foreground">, </span>
-              <span className="text-foreground">"curilo.ai"</span>
-              <span className="text-muted-foreground">],</span>
-            </div>
-            <div className="pl-4">
-              <span className="text-terminal-amber">previously</span>
-              <span className="text-muted-foreground">: </span>
-              <span className="text-foreground">"tutoring @ 4 locations, property @ 18"</span>
-              <span className="text-muted-foreground">,</span>
-            </div>
-            <div className="pl-4">
-              <span className="text-terminal-amber">north_star</span>
-              <span className="text-muted-foreground">: </span>
-              <span className="text-foreground">"build cool things"</span>
-            </div>
-            <div className="text-muted-foreground">
-              {"}"}<span className="animate-blink ml-1">▌</span>
-            </div>
-          </div>
+          <TypingHero />
         </section>
 
         {/* Projects */}
-        <section className="mb-24">
+        <section ref={projectsRef} className="mb-24">
           <div className="flex items-baseline justify-between mb-6">
             <h2 className="font-mono text-sm text-terminal-green">// projects</h2>
             <Link to="/projects" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono">
@@ -62,7 +34,7 @@ const Index = () => {
         </section>
 
         {/* Essays */}
-        <section>
+        <section ref={essaysRef}>
           <div className="flex items-baseline justify-between mb-6">
             <h2 className="font-mono text-sm text-terminal-green">// essays</h2>
             <Link to="/essays" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono">
