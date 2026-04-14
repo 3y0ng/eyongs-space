@@ -15,10 +15,10 @@ const About = () => {
           <h2 className="font-display text-2xl md:text-3xl mb-6">Hey, I'm Eyong.</h2>
           <div className="space-y-4 text-foreground/80 leading-[1.8]">
             <p>
-              I'm a student and builder based in Australia. I started a tutoring business from my living room as a college freshman to support my family — it grew to four brick-and-mortar locations and six-figure revenue within three years.
+              I'm a student and builder based in Australia. I started a tutoring business from my living room as a college freshman to support my family. It grew to four brick-and-mortar locations and $500k ARR within three years.
             </p>
             <p>
-              I've since passed it on to my younger brother and moved into tech. Now I'm building AI products — Pyreel.ai for marketing orchestration and Curilo.ai for automated English writing feedback.
+              I've since passed it on to my younger brother and moved into tech. Now I'm building products that draw on pain points I encountered first-hand. Pyreel.com for helping founders nail distribution through agentic marketing orchestration, and Curilo.ai, an AI writing tutor for K-12 students.
             </p>
           </div>
         </div>
@@ -37,29 +37,29 @@ const About = () => {
           <div className="pl-4">
             <span className="text-terminal-amber">fuel</span>
             <span className="text-muted-foreground">: </span>
-            <span className="text-foreground">"coffee + deadlines"</span>
+            <span className="text-foreground">"vibes + making things work"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
             <span className="text-terminal-amber">currently_obsessed_with</span>
             <span className="text-muted-foreground">: </span>
-            <span className="text-foreground">"making LLMs do things they shouldn't"</span>
+            <span className="text-foreground">"building cool stuff + my dog"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
             <span className="text-terminal-amber">hot_take</span>
             <span className="text-muted-foreground">: </span>
-            <span className="text-foreground">"most MVPs need fewer features, not more"</span>
+            <span className="text-foreground">"turns out pmf is still the only real moat"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
             <span className="text-terminal-amber">stack</span>
             <span className="text-muted-foreground">: [</span>
-            <span className="text-foreground">"React"</span>
+            <span className="text-foreground">"TypeScript"</span>
             <span className="text-muted-foreground">, </span>
-            <span className="text-foreground">"FastAPI"</span>
+            <span className="text-foreground">"Next.js"</span>
             <span className="text-muted-foreground">, </span>
-            <span className="text-foreground">"LLMs"</span>
+            <span className="text-foreground">"Postgres"</span>
             <span className="text-muted-foreground">]</span>
             <span className="text-muted-foreground">,</span>
           </div>
