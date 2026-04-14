@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import PageTransition from "@/components/PageTransition";
+import ReadingProgress from "@/components/ReadingProgress";
 import { essays } from "@/data/essays";
 
 const EssayDetail = () => {
@@ -21,6 +22,7 @@ const EssayDetail = () => {
 
   return (
     <PageTransition>
+      <ReadingProgress />
       <article className="max-w-2xl mx-auto px-6 pt-28 pb-16">
         <Link to="/essays" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-10 inline-block">
           ← Back to essays
@@ -40,7 +42,6 @@ const EssayDetail = () => {
           {essay.content.split("\n\n").map((block, i) => {
             const trimmed = block.trim();
             
-            // Check if block is a list of bullet points
             if (trimmed.includes("\n•") || trimmed.startsWith("•")) {
               const items = trimmed.split("\n").filter(line => line.trim().startsWith("•"));
               return (
@@ -54,7 +55,6 @@ const EssayDetail = () => {
               );
             }
 
-            // Check if block is a short line with no period (subheading)
             const isSubheading = trimmed.length < 80 && !trimmed.endsWith(".") && !trimmed.endsWith(":") && !trimmed.startsWith("•") && trimmed.length > 0;
             
             if (isSubheading) {

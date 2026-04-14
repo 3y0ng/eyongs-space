@@ -4,6 +4,7 @@ const links = [
   { to: "/", label: "Home" },
   { to: "/projects", label: "Projects" },
   { to: "/essays", label: "Essays" },
+  { to: "/about", label: "About" },
 ];
 
 const Navbar = () => {
