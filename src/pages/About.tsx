@@ -35,12 +35,6 @@ const About = () => {
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
-            <span className="text-terminal-amber">fuel</span>
-            <span className="text-muted-foreground">: </span>
-            <span className="text-foreground">"vibes + making things work"</span>
-            <span className="text-muted-foreground">,</span>
-          </div>
-          <div className="pl-4">
             <span className="text-terminal-amber">currently_obsessed_with</span>
             <span className="text-muted-foreground">: </span>
             <span className="text-foreground">"building cool stuff + my dog"</span>
