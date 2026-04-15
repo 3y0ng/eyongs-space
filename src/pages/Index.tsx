@@ -47,8 +47,8 @@ const Index = () => {
             </Link>
           </div>
           <div>
-            {projects.slice(0, 3).map((project) => (
-              <ProjectCard key={project.id} project={project} />
+             {projects.slice(0, 3).map((project) => (
+              <ProjectCard key={project.id} project={project} showPreview={false} />
             ))}
           </div>
         </section>
