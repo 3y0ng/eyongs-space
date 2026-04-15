@@ -1,154 +1,142 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import mikeyWalkImg from "@/assets/mikey-walk.png";
-import mikeySitImg from "@/assets/mikey-sit.png";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { useSpriteAnimation } from "@/hooks/useSpriteAnimation";
+
+import idleFront0 from "@/assets/dog_sprites/idle_front/idle_front_00.png";
+import idleFront1 from "@/assets/dog_sprites/idle_front/idle_front_01.png";
+import idleFront2 from "@/assets/dog_sprites/idle_front/idle_front_02.png";
+import idleFront3 from "@/assets/dog_sprites/idle_front/idle_front_03.png";
+
+const IDLE_FRONT_FRAMES = [idleFront0, idleFront1, idleFront2, idleFront3];
+
+const PEEK_PHRASES = ["what's this?", "bark!", "shhhh", "woof!", "psst..."];
 
 interface PixelDogProps {
   onPeekClick: () => void;
   showHint: boolean;
 }
 
-const DOG_SIZE = 32;
-const WALK_SPEED = 1.2;
-const CHASE_SPEED = 2.5;
-const CHASE_THRESHOLD = 200;
-
-const FACTS = [
-  "woof!",
-  "i love walks.",
-  "naps > deploys.",
-  "i ate a USB cable once.",
-  "treat bag? i heard it.",
-  "i'm the real PM here.",
-];
+const DOG_SIZE = 48;
+const PEEK_AMOUNT = DOG_SIZE / 2;
 
 const PixelDog = ({ onPeekClick, showHint }: PixelDogProps) => {
-  const [x, setX] = useState(() => Math.random() * (window.innerWidth - DOG_SIZE));
-  const [facingRight, setFacingRight] = useState(true);
-  const [isWalking, setIsWalking] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [bubble, setBubble] = useState<string | null>(null);
-  const mouseX = useRef(window.innerWidth / 2);
-  const targetX = useRef(Math.random() * (window.innerWidth - DOG_SIZE));
-  const posRef = useRef(x);
-  const idleTimer = useRef<ReturnType<typeof setTimeout>>();
-  const frameRef = useRef<number>();
-  const bubbleTimer = useRef<ReturnType<typeof setTimeout>>();
+  const [showKonami, setShowKonami] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const konamiTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
-  useEffect(() => {
-    const onMouseMove = (e: MouseEvent) => {
-      mouseX.current = e.clientX;
-    };
-    window.addEventListener("mousemove", onMouseMove);
-    return () => window.removeEventListener("mousemove", onMouseMove);
+  const frameSrc = useSpriteAnimation(IDLE_FRONT_FRAMES, 3, visible);
+
+  const clearTimers = useCallback(() => {
+    if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = undefined; }
+    if (hideTimerRef.current) { clearTimeout(hideTimerRef.current); hideTimerRef.current = undefined; }
+    if (konamiTimerRef.current) { clearTimeout(konamiTimerRef.current); konamiTimerRef.current = undefined; }
   }, []);
 
-  // Occasional speech bubble (less frequent)
-  useEffect(() => {
-    const schedule = () => {
-      const delay = 12000 + Math.random() * 18000; // 12-30s
-      bubbleTimer.current = setTimeout(() => {
-        const fact = FACTS[Math.floor(Math.random() * FACTS.length)];
-        setBubble(fact);
-        setTimeout(() => setBubble(null), 3000);
-        schedule();
-      }, delay);
-    };
-    schedule();
-    return () => { if (bubbleTimer.current) clearTimeout(bubbleTimer.current); };
-  }, []);
+  const schedulePeek = useCallback(() => {
+    const delay = 15000 + Math.random() * 10000;
+    timerRef.current = setTimeout(() => {
+      const phrase = PEEK_PHRASES[Math.floor(Math.random() * PEEK_PHRASES.length)];
+      setBubble(phrase);
+      setShowKonami(false);
+      setVisible(true);
 
-  const pickNewTarget = useCallback(() => {
-    targetX.current = Math.random() * (window.innerWidth - DOG_SIZE);
+      hideTimerRef.current = setTimeout(() => {
+        setVisible(false);
+        setBubble(null);
+        setShowKonami(false);
+        schedulePeek();
+      }, 4000);
+    }, delay);
   }, []);
 
   useEffect(() => {
-    const animate = () => {
-      const currentX = posRef.current;
-      const distToMouse = Math.abs(mouseX.current - currentX - DOG_SIZE / 2);
+    const initialDelay = 3000 + Math.random() * 2000;
+    timerRef.current = setTimeout(() => {
+      const phrase = PEEK_PHRASES[Math.floor(Math.random() * PEEK_PHRASES.length)];
+      setBubble(phrase);
+      setVisible(true);
 
-      let target: number;
-      let speed: number;
+      hideTimerRef.current = setTimeout(() => {
+        setVisible(false);
+        setBubble(null);
+        schedulePeek();
+      }, 4000);
+    }, initialDelay);
 
-      if (distToMouse < CHASE_THRESHOLD) {
-        target = mouseX.current - DOG_SIZE / 2;
-        speed = CHASE_SPEED;
-      } else {
-        target = targetX.current;
-        speed = WALK_SPEED;
-      }
+    return clearTimers;
+  }, [schedulePeek, clearTimers]);
 
-      const diff = target - currentX;
-      const absDiff = Math.abs(diff);
+  const handleClick = () => {
+    onPeekClick();
 
-      if (absDiff < 2) {
-        if (distToMouse >= CHASE_THRESHOLD) {
-          setIsWalking(false);
-          if (!idleTimer.current) {
-            idleTimer.current = setTimeout(() => {
-              pickNewTarget();
-              setIsWalking(true);
-              idleTimer.current = undefined;
-            }, 2000 + Math.random() * 3000);
-          }
-        }
-      } else {
-        setIsWalking(true);
-        if (idleTimer.current) {
-          clearTimeout(idleTimer.current);
-          idleTimer.current = undefined;
-        }
-        const step = Math.min(speed, absDiff);
-        const direction = diff > 0 ? 1 : -1;
-        const newX = Math.max(0, Math.min(window.innerWidth - DOG_SIZE, currentX + direction * step));
-        posRef.current = newX;
-        setX(newX);
-        setFacingRight(direction > 0);
-      }
+    if (bubble && !showKonami) {
+      konamiTimerRef.current = setTimeout(() => {
+        setBubble("↑↑↓↓←→←→BA");
+        setShowKonami(true);
+      }, 400);
+    } else {
+      setBubble("↑↑↓↓←→←→BA");
+      setShowKonami(true);
+    }
 
-      frameRef.current = requestAnimationFrame(animate);
-    };
-
-    frameRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (frameRef.current) cancelAnimationFrame(frameRef.current);
-      if (idleTimer.current) clearTimeout(idleTimer.current);
-    };
-  }, [pickNewTarget]);
+    if (hideTimerRef.current) { clearTimeout(hideTimerRef.current); hideTimerRef.current = undefined; }
+    hideTimerRef.current = setTimeout(() => {
+      setVisible(false);
+      setBubble(null);
+      setShowKonami(false);
+      schedulePeek();
+    }, 5000);
+  };
 
   return (
-    <div
-      className="fixed z-[9999] select-none"
-      style={{
-        left: x,
-        bottom: 0,
-        width: DOG_SIZE,
-        height: DOG_SIZE,
-        cursor: "pointer",
-      }}
-      onClick={onPeekClick}
-    >
-      {/* Speech bubble */}
-      {bubble && (
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 whitespace-nowrap bg-card border border-border rounded px-2 py-1 text-[10px] font-mono text-muted-foreground animate-fade-in">
-          {bubble}
-          <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-border" />
+    <>
+      {/* Speech bubble — positioned independently so it's not clipped */}
+      {bubble && visible && (
+        <div
+          className="fixed z-[10000] animate-fade-in"
+          style={{
+            bottom: PEEK_AMOUNT + 8,
+            right: 24 + DOG_SIZE + 8,
+          }}
+        >
+          <div className="whitespace-nowrap bg-card border border-border rounded px-2 py-1 text-[10px] font-mono text-muted-foreground">
+            {bubble}
+            {/* Arrow pointing right toward the dog */}
+            <div className="absolute top-1/2 -translate-y-1/2 -right-[4px] w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[4px] border-l-border" />
+          </div>
         </div>
       )}
-      <img
-        src={isWalking ? mikeyWalkImg : mikeySitImg}
-        alt="Mikey"
-        className="w-full h-full"
+
+      {/* Dog peek container — clips the sprite so only the head shows */}
+      <div
+        className="fixed z-[9999] select-none overflow-hidden"
         style={{
-          imageRendering: "pixelated",
-          transform: facingRight ? "scaleX(1)" : "scaleX(-1)",
+          bottom: 0,
+          right: 24,
+          width: DOG_SIZE,
+          height: DOG_SIZE,
+          cursor: "pointer",
         }}
-        draggable={false}
-      />
-      {showHint && (
-        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 whitespace-nowrap bg-card border border-border rounded px-2 py-1 text-[10px] font-mono text-muted-foreground animate-fade-in">
-          ↑↑↓↓←→←→BA
-        </div>
-      )}
-    </div>
+        onClick={handleClick}
+      >
+        <img
+          src={frameSrc}
+          alt="Mikey"
+          style={{
+            width: DOG_SIZE,
+            height: DOG_SIZE,
+            imageRendering: "pixelated",
+            transition: "transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
+            transform: visible
+              ? `translateY(${DOG_SIZE - PEEK_AMOUNT}px)`
+              : `translateY(${DOG_SIZE + 4}px)`,
+          }}
+          draggable={false}
+        />
+      </div>
+    </>
   );
 };
 

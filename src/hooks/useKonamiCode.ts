@@ -8,25 +8,22 @@ const KONAMI = [
 
 /**
  * Returns:
- * - mikeyUnlocked: true once Konami code has been entered (persists in session)
- * - justActivated: true for 3s right after activation (for triggering the rain animation)
+ * - mikeyUnlocked: true once Konami code has been entered (resets on page refresh)
+ * - justActivated: true for 3.5s right after activation (for triggering the rain animation)
  */
 export const useKonamiCode = () => {
-  const [mikeyUnlocked, setMikeyUnlocked] = useState(() => {
-    return sessionStorage.getItem("mikey_unlocked") === "true";
-  });
+  const [mikeyUnlocked, setMikeyUnlocked] = useState(false);
   const [justActivated, setJustActivated] = useState(false);
   const index = useRef(0);
 
   const activate = useCallback(() => {
-    sessionStorage.setItem("mikey_unlocked", "true");
     setJustActivated(true);
     setMikeyUnlocked(true);
     setTimeout(() => setJustActivated(false), 3500);
   }, []);
 
   useEffect(() => {
-    if (mikeyUnlocked) return; // Already unlocked, no need to listen
+    if (mikeyUnlocked) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === KONAMI[index.current]) {

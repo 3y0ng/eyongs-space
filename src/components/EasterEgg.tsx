@@ -6,13 +6,10 @@ import MikeyPet from "@/components/MikeyPet";
 
 const EasterEgg = () => {
   const { mikeyUnlocked, justActivated } = useKonamiCode();
-  const [showRain, setShowRain] = useState(false);
-  const [showPet, setShowPet] = useState(() => {
-    return sessionStorage.getItem("mikey_unlocked") === "true";
-  });
+  const [showPet, setShowPet] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [hintVisible, setHintVisible] = useState(false);
 
-  // When just activated, show bone rain first
   const handleRainTriggered = justActivated && !showPet;
 
   const onPeekClick = useCallback(() => {
@@ -21,6 +18,10 @@ const EasterEgg = () => {
 
   const onRainComplete = useCallback(() => {
     setShowPet(true);
+  }, []);
+
+  const onDismiss = useCallback(() => {
+    setDismissed(true);
   }, []);
 
   return (
@@ -35,8 +36,8 @@ const EasterEgg = () => {
         <BoneRain onComplete={onRainComplete} />
       )}
 
-      {/* Persistent Mikey pet above footer */}
-      {showPet && <MikeyPet />}
+      {/* Persistent Mikey pet at bottom of screen */}
+      {showPet && !dismissed && <MikeyPet onDismiss={onDismiss} />}
     </>
   );
 };
