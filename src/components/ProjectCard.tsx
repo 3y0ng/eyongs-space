@@ -8,7 +8,7 @@ const statusColor: Record<string, string> = {
   Exploring: "text-terminal-amber",
 };
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = ({ project, showPreview = true }: { project: Project; showPreview?: boolean }) => {
   const cardRef = useRef<HTMLAnchorElement>(null);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -49,7 +49,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       </div>
 
       {/* Hover thumbnail */}
-      {project.image && (
+      {showPreview && project.image && (
         <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[calc(100%+1rem)] opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none hidden lg:block z-10">
           <img
             src={project.image}
