@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 const STATUS_MESSAGES = [
-  "compiling...",
-  "pushing to main...",
-  "debugging at 2am...",
-  "refactoring everything...",
-  "deploying to prod on friday...",
-  "rm -rf node_modules...",
-  "asking chatgpt for help...",
+  "shipping at 2am...",
+  "0 to 1 mode...",
+  "talking to users...",
+  "iterating on feedback...",
+  "one more feature then sleep...",
+  "pmf or bust...",
+  "cursor + coffee...",
 ];
 
 const NowPlaying = () => {

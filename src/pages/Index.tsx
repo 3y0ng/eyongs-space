@@ -7,7 +7,7 @@ import { projects } from "@/data/projects";
 import { essays } from "@/data/essays";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-const useParallax = (speed = 0.15) => {
+const useParallax = (speed = 0.04) => {
   const ref = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -27,8 +27,8 @@ const useParallax = (speed = 0.15) => {
 const Index = () => {
   const projectsRef = useScrollReveal<HTMLElement>();
   const essaysRef = useScrollReveal<HTMLElement>({ delay: 100 });
-  const projectsHeaderRef = useParallax(0.12);
-  const essaysHeaderRef = useParallax(0.12);
+  const projectsHeaderRef = useParallax(0.04);
+  const essaysHeaderRef = useParallax(0.04);
 
   return (
     <PageTransition>
