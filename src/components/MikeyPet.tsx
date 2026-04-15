@@ -1,21 +1,5 @@
 import { useState, useEffect } from "react";
-
-/**
- * Mikey the on-screen pet — sits above the footer after Konami code activation.
- * Shows fun facts about himself in speech bubbles.
- */
-
-const MIKEY_ART = [
-  "  ▄██▄  ",
-  " █░░░░█ ",
-  " █ ●░● █",
-  " █░░▼░░█",
-  "  █▄▄█  ",
-  " ██████ ",
-  "█░░░░░░█",
-  "█░░░░░░█",
-  " ██  ██ ",
-];
+import mikeySitImg from "@/assets/mikey-sit.png";
 
 const FACTS = [
   "i'm four years old! in human years at least.",
@@ -36,7 +20,6 @@ const MikeyPet = () => {
   const [wagging, setWagging] = useState(false);
 
   useEffect(() => {
-    // Cycle through facts
     const interval = setInterval(() => {
       setShowBubble(false);
       setTimeout(() => {
@@ -47,7 +30,6 @@ const MikeyPet = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Occasional wag animation
   useEffect(() => {
     const wagInterval = setInterval(() => {
       setWagging(true);
@@ -59,31 +41,27 @@ const MikeyPet = () => {
   return (
     <div className="w-full border-t border-border bg-background">
       <div className="max-w-3xl mx-auto px-6 py-4 flex items-end gap-4">
-        {/* Mikey */}
         <div
           className="flex-shrink-0 transition-transform duration-300"
-          style={{
-            transform: wagging ? "rotate(-3deg)" : "rotate(0deg)",
-          }}
+          style={{ transform: wagging ? "rotate(-3deg)" : "rotate(0deg)" }}
         >
-          <pre
-            className="font-mono text-[6px] leading-[7px] text-foreground select-none"
-            aria-label="Mikey the pixel art dog"
-          >
-            {MIKEY_ART.join("\n")}
-          </pre>
+          <img
+            src={mikeySitImg}
+            alt="Mikey the pixel art dog"
+            className="w-12 h-12 select-none"
+            style={{ imageRendering: "pixelated" }}
+            draggable={false}
+          />
           <p className="font-mono text-[8px] text-muted-foreground text-center mt-0.5">
             mikey
           </p>
         </div>
 
-        {/* Speech bubble */}
         <div
           className={`relative bg-card border border-border rounded-lg px-3 py-2 mb-2 transition-opacity duration-300 ${
             showBubble ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* Bubble tail */}
           <div className="absolute left-[-6px] bottom-3 w-0 h-0 border-t-[6px] border-t-transparent border-r-[6px] border-r-border border-b-[6px] border-b-transparent" />
           <div className="absolute left-[-5px] bottom-3 w-0 h-0 border-t-[6px] border-t-transparent border-r-[6px] border-r-card border-b-[6px] border-b-transparent" />
           <p className="font-mono text-xs text-muted-foreground max-w-[240px]">
