@@ -1,5 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+
+const STATUS_MESSAGES = [
+  "compiling...",
+  "pushing to main...",
+  "debugging at 2am...",
+  "refactoring everything...",
+  "deploying to prod on friday...",
+  "rm -rf node_modules...",
+  "asking chatgpt for help...",
+];
+
+const NowPlaying = () => {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setIdx((i) => (i + 1) % STATUS_MESSAGES.length), 3000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground mt-6">
+      <span className="inline-block w-1.5 h-1.5 rounded-full bg-terminal-green animate-blink" />
+      <span className="transition-opacity duration-300">{STATUS_MESSAGES[idx]}</span>
+    </div>
+  );
+};
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -66,6 +90,8 @@ const Footer = () => {
           </div>
           
         </div>
+
+        <NowPlaying />
 
         <p className="font-mono text-xs text-muted-foreground mt-6">
           last commit: {new Date().toISOString().slice(0, 10)} · built with leftover claude-code credits

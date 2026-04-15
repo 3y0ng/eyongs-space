@@ -5,6 +5,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
+import EasterEgg from "@/components/EasterEgg";
+import CommandPalette from "@/components/CommandPalette";
 import Index from "./pages/Index";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
@@ -21,6 +24,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <CustomCursor />
+        <EasterEgg />
+        <CommandPalette />
         <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />

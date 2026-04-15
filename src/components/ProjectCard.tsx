@@ -1,3 +1,4 @@
+import { useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import type { Project } from "@/data/projects";
 
@@ -8,8 +9,33 @@ const statusColor: Record<string, string> = {
 };
 
 const ProjectCard = ({ project }: { project: Project }) => {
+  const cardRef = useRef<HTMLAnchorElement>(null);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    el.style.transform = `translate(${x * 0.04}px, ${y * 0.06}px)`;
+    el.style.boxShadow = `0 0 20px -8px hsl(var(--terminal-green) / 0.15)`;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.transform = "";
+    el.style.boxShadow = "";
+  }, []);
+
   return (
-    <Link to={`/projects/${project.id}`} className="group block py-5 border-b border-border last:border-0 relative">
+    <Link
+      ref={cardRef}
+      to={`/projects/${project.id}`}
+      className="group block py-5 border-b border-border last:border-0 relative transition-[transform,box-shadow] duration-200"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="font-medium group-hover:underline underline-offset-4 transition-all">
