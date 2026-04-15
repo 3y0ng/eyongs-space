@@ -16,7 +16,7 @@ interface PixelDogProps {
 }
 
 const DOG_SIZE = 48;
-const PEEK_AMOUNT = DOG_SIZE / 2;
+const PEEK_AMOUNT = DOG_SIZE * 0.65;
 
 const PixelDog = ({ onPeekClick, showHint }: PixelDogProps) => {
   const [visible, setVisible] = useState(false);
