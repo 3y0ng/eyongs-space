@@ -12,7 +12,7 @@ const About = () => {
         <h1 className="font-mono text-sm text-terminal-green mb-10">// about</h1>
 
         <div ref={bioRef} className="mb-16">
-          <h2 className="font-display text-2xl md:text-3xl mb-6">Hey, I'm Eyong.</h2>
+          <h2 className="font-display text-2xl md:text-3xl mb-6">Hey, I'm E-Yong.</h2>
           <div className="space-y-4 text-foreground/80 leading-[1.8]">
             <p>
               I'm a student and builder based in Australia. I started a tutoring business from my living room as a college freshman to support my family. It grew to four brick-and-mortar locations and $500k ARR within three years.
