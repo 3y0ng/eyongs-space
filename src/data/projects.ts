@@ -19,7 +19,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "pyreel",
-    title: "Pyreel.ai",
+    title: "Pyreel",
     tagline: "Agentic marketing orchestration",
     description: "A dual-platform agentic orchestration layer for marketing. Built using FastAPI and Celery, it automates end-to-end campaign execution from research to video asset generation.",
     status: "Active",
@@ -29,7 +29,7 @@ export const projects: Project[] = [
   },
   {
     id: "curilo",
-    title: "Curilo.ai",
+    title: "Curilo",
     tagline: "Instant feedback loops for English writing",
     description: "An automated English writing platform that solves the \"feedback lag\" in traditional tutoring. Built to productize a tutoring business, using LLMs to create instant feedback loops and dynamic lesson plans based on student-specific skill gaps.",
     status: "Active",
@@ -39,7 +39,7 @@ export const projects: Project[] = [
   },
   {
     id: "givemap",
-    title: "Givemap.quest",
+    title: "GiveMap",
     tagline: "Gamified effective altruism",
     description: "An experimental UI for effective altruism. Designed as a gamified \"spy mission\" to increase donor engagement — a deep-dive into using agentic coding tools to build complex, non-standard web interfaces.",
     status: "Exploring",
