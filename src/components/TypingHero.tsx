@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 // ASCII art name — compact block style
 const ASCII_NAME = `
- ███████╗██╗   ██╗ ██████╗ ███╗   ██╗ ██████╗ 
+  ███████╗██╗   ██╗ ██████╗ ███╗   ██╗ ██████╗ 
  ██╔════╝╚██╗ ██╔╝██╔═══██╗████╗  ██║██╔════╝ 
  █████╗   ╚████╔╝ ██║   ██║██╔██╗ ██║██║  ███╗
  ██╔══╝    ╚██╔╝  ██║   ██║██║╚██╗██║██║   ██║
@@ -11,49 +11,61 @@ const ASCII_NAME = `
 `.trimStart();
 
 const lines = [
-  { indent: false, text: '> eyong.status()' },
-  { indent: false, text: '{' },
-  { indent: true, parts: [
-    { text: 'role', cls: 'text-terminal-amber' },
-    { text: ': ', cls: 'text-muted-foreground' },
-    { text: '"student & builder"', cls: 'text-foreground' },
-    { text: ',', cls: 'text-muted-foreground' },
-  ]},
-  { indent: true, parts: [
-    { text: 'building', cls: 'text-terminal-amber' },
-    { text: ': [', cls: 'text-muted-foreground' },
-    { text: '"pyreel.ai"', cls: 'text-foreground' },
-    { text: ', ', cls: 'text-muted-foreground' },
-    { text: '"curilo.ai"', cls: 'text-foreground' },
-    { text: '],', cls: 'text-muted-foreground' },
-  ]},
-  { indent: true, parts: [
-    { text: 'previously', cls: 'text-terminal-amber' },
-    { text: ': ', cls: 'text-muted-foreground' },
-    { text: '"tutoring @ 4 locations, property @ 18"', cls: 'text-foreground' },
-    { text: ',', cls: 'text-muted-foreground' },
-  ]},
-  { indent: true, parts: [
-    { text: 'north_star', cls: 'text-terminal-amber' },
-    { text: ': ', cls: 'text-muted-foreground' },
-    { text: '"build cool things"', cls: 'text-foreground' },
-  ]},
-  { indent: false, text: '}' },
+  { indent: false, text: "> eyong.status()" },
+  { indent: false, text: "{" },
+  {
+    indent: true,
+    parts: [
+      { text: "role", cls: "text-terminal-amber" },
+      { text: ": ", cls: "text-muted-foreground" },
+      { text: '"student & builder"', cls: "text-foreground" },
+      { text: ",", cls: "text-muted-foreground" },
+    ],
+  },
+  {
+    indent: true,
+    parts: [
+      { text: "building", cls: "text-terminal-amber" },
+      { text: ": [", cls: "text-muted-foreground" },
+      { text: '"pyreel.ai"', cls: "text-foreground" },
+      { text: ", ", cls: "text-muted-foreground" },
+      { text: '"curilo.ai"', cls: "text-foreground" },
+      { text: "],", cls: "text-muted-foreground" },
+    ],
+  },
+  {
+    indent: true,
+    parts: [
+      { text: "previously", cls: "text-terminal-amber" },
+      { text: ": ", cls: "text-muted-foreground" },
+      { text: '"tutoring @ 4 locations, property @ 18"', cls: "text-foreground" },
+      { text: ",", cls: "text-muted-foreground" },
+    ],
+  },
+  {
+    indent: true,
+    parts: [
+      { text: "north_star", cls: "text-terminal-amber" },
+      { text: ": ", cls: "text-muted-foreground" },
+      { text: '"build cool things"', cls: "text-foreground" },
+    ],
+  },
+  { indent: false, text: "}" },
 ];
 
 // Flatten all characters with their styling
 function buildCharStream() {
   const chars: { char: string; cls: string; lineIdx: number }[] = [];
   lines.forEach((line, lineIdx) => {
-    if (lineIdx > 0) chars.push({ char: '\n', cls: '', lineIdx });
-    if ('text' in line && !('parts' in line)) {
-      const cls = 'text-muted-foreground';
+    if (lineIdx > 0) chars.push({ char: "\n", cls: "", lineIdx });
+    if ("text" in line && !("parts" in line)) {
+      const cls = "text-muted-foreground";
       for (const c of line.text) {
-        chars.push({ char: c, cls: lineIdx === 0 ? '' : cls, lineIdx });
+        chars.push({ char: c, cls: lineIdx === 0 ? "" : cls, lineIdx });
       }
-    } else if ('parts' in line) {
+    } else if ("parts" in line) {
       if (line.indent) {
-        for (let s = 0; s < 4; s++) chars.push({ char: ' ', cls: '', lineIdx });
+        for (let s = 0; s < 4; s++) chars.push({ char: " ", cls: "", lineIdx });
       }
       for (const part of line.parts!) {
         for (const c of part.text) {
@@ -113,13 +125,17 @@ const TypingHero = () => {
 
   // Build rendered spans for CLI
   const rendered: React.ReactNode[] = [];
-  let currentCls = '';
-  let buffer = '';
+  let currentCls = "";
+  let buffer = "";
 
   const flush = (key: string) => {
     if (buffer) {
-      rendered.push(<span key={key} className={currentCls}>{buffer}</span>);
-      buffer = '';
+      rendered.push(
+        <span key={key} className={currentCls}>
+          {buffer}
+        </span>,
+      );
+      buffer = "";
     }
   };
 
@@ -131,7 +147,7 @@ const TypingHero = () => {
     }
     buffer += char;
   }
-  flush('end');
+  flush("end");
 
   return (
     <div className="rounded-lg border border-border bg-card p-6 font-mono text-sm mb-6 min-h-[200px]">
