@@ -78,3 +78,10 @@
 .animate-blink {
   animation: blink 1s step-end infinite;
 }
+
+/* Hide default cursor on desktop when custom cursor is active */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}

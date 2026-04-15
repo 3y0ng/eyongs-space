@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PageTransition from "@/components/PageTransition";
 import ProjectCard from "@/components/ProjectCard";
@@ -6,9 +7,28 @@ import { projects } from "@/data/projects";
 import { essays } from "@/data/essays";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
+const useParallax = (speed = 0.15) => {
+  const ref = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      el.style.transform = `translateY(${center * speed}px)`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [speed]);
+  return ref;
+};
+
 const Index = () => {
   const projectsRef = useScrollReveal<HTMLElement>();
   const essaysRef = useScrollReveal<HTMLElement>({ delay: 100 });
+  const projectsHeaderRef = useParallax(0.12);
+  const essaysHeaderRef = useParallax(0.12);
 
   return (
     <PageTransition>
@@ -21,7 +41,7 @@ const Index = () => {
         {/* Projects */}
         <section ref={projectsRef} className="mb-24">
           <div className="flex items-baseline justify-between mb-6">
-            <h2 className="font-mono text-sm text-terminal-green">// projects</h2>
+            <h2 ref={projectsHeaderRef} className="font-mono text-sm text-terminal-green">// projects</h2>
             <Link to="/projects" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono">
               view all →
             </Link>
@@ -36,7 +56,7 @@ const Index = () => {
         {/* Essays */}
         <section ref={essaysRef}>
           <div className="flex items-baseline justify-between mb-6">
-            <h2 className="font-mono text-sm text-terminal-green">// essays</h2>
+            <h2 ref={essaysHeaderRef} className="font-mono text-sm text-terminal-green">// essays</h2>
             <Link to="/essays" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono">
               read all →
             </Link>
