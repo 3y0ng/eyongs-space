@@ -1,5 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 
+// ASCII art name — compact block style
+const ASCII_NAME = `
+ ███████╗██╗   ██╗ ██████╗ ███╗   ██╗ ██████╗ 
+ ██╔════╝╚██╗ ██╔╝██╔═══██╗████╗  ██║██╔════╝ 
+ █████╗   ╚████╔╝ ██║   ██║██╔██╗ ██║██║  ███╗
+ ██╔══╝    ╚██╔╝  ██║   ██║██║╚██╗██║██║   ██║
+ ███████╗   ██║   ╚██████╔╝██║ ╚████║╚██████╔╝
+ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ 
+`.trimStart();
+
 const lines = [
   { indent: false, text: '> eyong.status()' },
   { indent: false, text: '{' },
@@ -37,16 +47,13 @@ function buildCharStream() {
   lines.forEach((line, lineIdx) => {
     if (lineIdx > 0) chars.push({ char: '\n', cls: '', lineIdx });
     if ('text' in line && !('parts' in line)) {
-      const cls = lineIdx === 0 ? 'text-muted-foreground' : 'text-muted-foreground';
+      const cls = 'text-muted-foreground';
       for (const c of line.text) {
         chars.push({ char: c, cls: lineIdx === 0 ? '' : cls, lineIdx });
       }
     } else if ('parts' in line) {
       if (line.indent) {
-        chars.push({ char: ' ', cls: '', lineIdx });
-        chars.push({ char: ' ', cls: '', lineIdx });
-        chars.push({ char: ' ', cls: '', lineIdx });
-        chars.push({ char: ' ', cls: '', lineIdx });
+        for (let s = 0; s < 4; s++) chars.push({ char: ' ', cls: '', lineIdx });
       }
       for (const part of line.parts!) {
         for (const c of part.text) {
@@ -61,26 +68,50 @@ function buildCharStream() {
 const charStream = buildCharStream();
 
 const TypingHero = () => {
+  const [asciiIdx, setAsciiIdx] = useState(0);
   const [visibleCount, setVisibleCount] = useState(0);
-  const done = visibleCount >= charStream.length;
+  const asciiDone = asciiIdx >= ASCII_NAME.length;
+  const done = asciiDone && visibleCount >= charStream.length;
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Phase 1: type ASCII art fast
   useEffect(() => {
+    const charsPerTick = 4;
     intervalRef.current = setInterval(() => {
-      setVisibleCount((prev) => {
-        if (prev >= charStream.length) {
+      setAsciiIdx((prev) => {
+        if (prev >= ASCII_NAME.length) {
           clearInterval(intervalRef.current!);
           return prev;
         }
-        return prev + 1;
+        return Math.min(prev + charsPerTick, ASCII_NAME.length);
       });
-    }, 18);
+    }, 8);
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
-  // Build rendered spans
+  // Phase 2: type CLI block after ASCII is done
+  useEffect(() => {
+    if (!asciiDone) return;
+    const timeout = setTimeout(() => {
+      intervalRef.current = setInterval(() => {
+        setVisibleCount((prev) => {
+          if (prev >= charStream.length) {
+            clearInterval(intervalRef.current!);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 18);
+    }, 300);
+    return () => {
+      clearTimeout(timeout);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [asciiDone]);
+
+  // Build rendered spans for CLI
   const rendered: React.ReactNode[] = [];
   let currentCls = '';
   let buffer = '';
@@ -100,20 +131,24 @@ const TypingHero = () => {
     }
     buffer += char;
   }
-  flush(`end`);
+  flush('end');
 
-  // Handle first line special coloring for the ">"
   return (
     <div className="rounded-lg border border-border bg-card p-6 font-mono text-sm mb-6 min-h-[200px]">
-      <pre className="whitespace-pre-wrap">
-        {rendered.length > 0 && (
-          <>
-            {/* Color the ">" green */}
-            {rendered}
-          </>
-        )}
-        <span className="animate-blink ml-0.5">▌</span>
+      {/* ASCII art name */}
+      <pre className="text-terminal-green text-[0.55rem] sm:text-xs leading-tight mb-4 whitespace-pre overflow-x-auto">
+        {ASCII_NAME.slice(0, asciiIdx)}
+        {!asciiDone && <span className="animate-blink">▌</span>}
       </pre>
+
+      {/* CLI block */}
+      {asciiDone && (
+        <pre className="whitespace-pre-wrap">
+          {rendered}
+          {!done && <span className="animate-blink ml-0.5">▌</span>}
+        </pre>
+      )}
+      {done && <span className="animate-blink ml-0.5">▌</span>}
     </div>
   );
 };
