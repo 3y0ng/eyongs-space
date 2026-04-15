@@ -1,0 +1,367 @@
+{
+  "sprite_sheet": "dog_sprites_maltese",
+  "source_size": [
+    1842,
+    2304
+  ],
+  "animations": {
+    "walk_right": {
+      "frames": [
+        {
+          "file": "walk_right/walk_right_00.png",
+          "width": 218,
+          "height": 190,
+          "original_bounds": {
+            "x": 332,
+            "y": 66,
+            "w": 214,
+            "h": 186
+          }
+        },
+        {
+          "file": "walk_right/walk_right_01.png",
+          "width": 217,
+          "height": 181,
+          "original_bounds": {
+            "x": 630,
+            "y": 75,
+            "w": 213,
+            "h": 177
+          }
+        },
+        {
+          "file": "walk_right/walk_right_02.png",
+          "width": 216,
+          "height": 190,
+          "original_bounds": {
+            "x": 928,
+            "y": 66,
+            "w": 212,
+            "h": 186
+          }
+        },
+        {
+          "file": "walk_right/walk_right_03.png",
+          "width": 218,
+          "height": 181,
+          "original_bounds": {
+            "x": 1223,
+            "y": 75,
+            "w": 214,
+            "h": 177
+          }
+        }
+      ],
+      "frame_count": 4,
+      "loop": true,
+      "fps": 8
+    },
+    "walk_left": {
+      "frames": [
+        {
+          "file": "walk_left/walk_left_00.png",
+          "width": 217,
+          "height": 190,
+          "original_bounds": {
+            "x": 333,
+            "y": 363,
+            "w": 213,
+            "h": 186
+          }
+        },
+        {
+          "file": "walk_left/walk_left_01.png",
+          "width": 217,
+          "height": 182,
+          "original_bounds": {
+            "x": 630,
+            "y": 371,
+            "w": 213,
+            "h": 178
+          }
+        },
+        {
+          "file": "walk_left/walk_left_02.png",
+          "width": 219,
+          "height": 190,
+          "original_bounds": {
+            "x": 926,
+            "y": 363,
+            "w": 215,
+            "h": 186
+          }
+        },
+        {
+          "file": "walk_left/walk_left_03.png",
+          "width": 217,
+          "height": 182,
+          "original_bounds": {
+            "x": 1224,
+            "y": 372,
+            "w": 213,
+            "h": 178
+          }
+        }
+      ],
+      "frame_count": 4,
+      "loop": true,
+      "fps": 8
+    },
+    "idle_front": {
+      "frames": [
+        {
+          "file": "idle_front/idle_front_00.png",
+          "width": 143,
+          "height": 174,
+          "original_bounds": {
+            "x": 379,
+            "y": 676,
+            "w": 139,
+            "h": 170
+          }
+        },
+        {
+          "file": "idle_front/idle_front_01.png",
+          "width": 144,
+          "height": 181,
+          "original_bounds": {
+            "x": 676,
+            "y": 669,
+            "w": 140,
+            "h": 177
+          }
+        },
+        {
+          "file": "idle_front/idle_front_02.png",
+          "width": 144,
+          "height": 190,
+          "original_bounds": {
+            "x": 973,
+            "y": 660,
+            "w": 140,
+            "h": 186
+          }
+        },
+        {
+          "file": "idle_front/idle_front_03.png",
+          "width": 144,
+          "height": 191,
+          "original_bounds": {
+            "x": 1270,
+            "y": 659,
+            "w": 140,
+            "h": 187
+          }
+        }
+      ],
+      "frame_count": 4,
+      "loop": true,
+      "fps": 8
+    },
+    "sit_down": {
+      "frames": [
+        {
+          "file": "sit_down/sit_down_00.png",
+          "width": 218,
+          "height": 190,
+          "original_bounds": {
+            "x": 333,
+            "y": 957,
+            "w": 214,
+            "h": 186
+          }
+        },
+        {
+          "file": "sit_down/sit_down_01.png",
+          "width": 209,
+          "height": 190,
+          "original_bounds": {
+            "x": 629,
+            "y": 957,
+            "w": 205,
+            "h": 186
+          }
+        },
+        {
+          "file": "sit_down/sit_down_02.png",
+          "width": 219,
+          "height": 199,
+          "original_bounds": {
+            "x": 917,
+            "y": 948,
+            "w": 215,
+            "h": 195
+          }
+        },
+        {
+          "file": "sit_down/sit_down_03.png",
+          "width": 200,
+          "height": 203,
+          "original_bounds": {
+            "x": 1224,
+            "y": 947,
+            "w": 196,
+            "h": 199
+          }
+        }
+      ],
+      "frame_count": 4,
+      "loop": false,
+      "fps": 8
+    },
+    "sit_idle": {
+      "frames": [
+        {
+          "file": "sit_idle/sit_idle_00.png",
+          "width": 199,
+          "height": 200,
+          "original_bounds": {
+            "x": 333,
+            "y": 1244,
+            "w": 195,
+            "h": 196
+          }
+        },
+        {
+          "file": "sit_idle/sit_idle_01.png",
+          "width": 199,
+          "height": 200,
+          "original_bounds": {
+            "x": 630,
+            "y": 1244,
+            "w": 195,
+            "h": 196
+          }
+        },
+        {
+          "file": "sit_idle/sit_idle_02.png",
+          "width": 199,
+          "height": 200,
+          "original_bounds": {
+            "x": 927,
+            "y": 1244,
+            "w": 195,
+            "h": 196
+          }
+        }
+      ],
+      "frame_count": 3,
+      "loop": true,
+      "fps": 8
+    },
+    "sleep": {
+      "frames": [
+        {
+          "file": "sleep/sleep_00.png",
+          "width": 247,
+          "height": 162,
+          "original_bounds": {
+            "x": 332,
+            "y": 1579,
+            "w": 243,
+            "h": 158
+          }
+        },
+        {
+          "file": "sleep/sleep_01.png",
+          "width": 246,
+          "height": 163,
+          "original_bounds": {
+            "x": 630,
+            "y": 1578,
+            "w": 242,
+            "h": 159
+          }
+        }
+      ],
+      "frame_count": 2,
+      "loop": true,
+      "fps": 8
+    },
+    "run_right": {
+      "frames": [
+        {
+          "file": "run_right/run_right_00.png",
+          "width": 246,
+          "height": 181,
+          "original_bounds": {
+            "x": 323,
+            "y": 1848,
+            "w": 242,
+            "h": 177
+          }
+        },
+        {
+          "file": "run_right/run_right_01.png",
+          "width": 247,
+          "height": 181,
+          "original_bounds": {
+            "x": 620,
+            "y": 1848,
+            "w": 243,
+            "h": 177
+          }
+        },
+        {
+          "file": "run_right/run_right_02.png",
+          "width": 264,
+          "height": 163,
+          "original_bounds": {
+            "x": 899,
+            "y": 1866,
+            "w": 260,
+            "h": 159
+          }
+        }
+      ],
+      "frame_count": 3,
+      "loop": true,
+      "fps": 8
+    },
+    "run_right_2": {
+      "frames": [
+        {
+          "file": "run_right_2/run_right_2_00.png",
+          "width": 264,
+          "height": 162,
+          "original_bounds": {
+            "x": 324,
+            "y": 2117,
+            "w": 260,
+            "h": 158
+          }
+        },
+        {
+          "file": "run_right_2/run_right_2_01.png",
+          "width": 246,
+          "height": 182,
+          "original_bounds": {
+            "x": 620,
+            "y": 2098,
+            "w": 242,
+            "h": 178
+          }
+        },
+        {
+          "file": "run_right_2/run_right_2_02.png",
+          "width": 237,
+          "height": 181,
+          "original_bounds": {
+            "x": 917,
+            "y": 2098,
+            "w": 233,
+            "h": 177
+          }
+        }
+      ],
+      "frame_count": 3,
+      "loop": true,
+      "fps": 8
+    }
+  },
+  "max_frame_size": {
+    "width": 264,
+    "height": 203
+  },
+  "total_frames": 27
+}

@@ -98,4 +98,10 @@
   * {
     cursor: none !important;
   }
+
+  /* Pixel bone cursor when dog is chasing */
+  .bone-cursor,
+  .bone-cursor * {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23fff%7D%3C/style%3E%3Crect x='2' y='6' width='12' height='4'/%3E%3Crect x='0' y='4' width='4' height='2'/%3E%3Crect x='0' y='10' width='4' height='2'/%3E%3Crect x='12' y='4' width='4' height='2'/%3E%3Crect x='12' y='10' width='4' height='2'/%3E%3C/svg%3E") 8 8, auto !important;
+  }
 }
