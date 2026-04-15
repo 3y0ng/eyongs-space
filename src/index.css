@@ -79,6 +79,20 @@
   animation: blink 1s step-end infinite;
 }
 
+@keyframes bone-fall {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
 /* Hide default cursor on desktop when custom cursor is active */
 @media (pointer: fine) {
   * {

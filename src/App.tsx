@@ -25,7 +25,6 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <CustomCursor />
-        <EasterEgg />
         <CommandPalette />
         <Navbar />
         <Routes>
@@ -37,6 +36,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <EasterEgg />
         <Footer />
       </BrowserRouter>
     </TooltipProvider>

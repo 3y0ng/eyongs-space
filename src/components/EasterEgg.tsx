@@ -1,30 +1,43 @@
+import { useState, useCallback } from "react";
 import { useKonamiCode } from "@/hooks/useKonamiCode";
+import PixelDog from "@/components/PixelDog";
+import BoneRain from "@/components/BoneRain";
+import MikeyPet from "@/components/MikeyPet";
 
 const EasterEgg = () => {
-  const active = useKonamiCode();
+  const { mikeyUnlocked, justActivated } = useKonamiCode();
+  const [showRain, setShowRain] = useState(false);
+  const [showPet, setShowPet] = useState(() => {
+    return sessionStorage.getItem("mikey_unlocked") === "true";
+  });
+  const [hintVisible, setHintVisible] = useState(false);
 
-  if (!active) return null;
+  // When just activated, show bone rain first
+  const handleRainTriggered = justActivated && !showPet;
+
+  const onPeekClick = useCallback(() => {
+    setHintVisible((v) => !v);
+  }, []);
+
+  const onRainComplete = useCallback(() => {
+    setShowPet(true);
+  }, []);
 
   return (
-    <div className="fixed inset-0 z-[10000] pointer-events-none animate-fade-in">
-      {/* CRT overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px)",
-          mixBlendMode: "multiply",
-        }}
-      />
-      {/* Green tint */}
-      <div className="absolute inset-0 bg-[hsl(var(--terminal-green)/0.08)]" />
-      {/* Message */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="font-mono text-sm text-[hsl(var(--terminal-green))] bg-background/90 px-6 py-4 rounded-md border border-[hsl(var(--terminal-green)/0.3)]">
-          <p className="animate-blink inline-block mr-2">▊</p>
-          <span>&gt; access granted. welcome, hacker.</span>
-        </div>
-      </div>
-    </div>
+    <>
+      {/* Peeking dog hint — only before unlock */}
+      {!mikeyUnlocked && (
+        <PixelDog onPeekClick={onPeekClick} showHint={hintVisible} />
+      )}
+
+      {/* Bone rain transition animation */}
+      {handleRainTriggered && !showPet && (
+        <BoneRain onComplete={onRainComplete} />
+      )}
+
+      {/* Persistent Mikey pet above footer */}
+      {showPet && <MikeyPet />}
+    </>
   );
 };
 
