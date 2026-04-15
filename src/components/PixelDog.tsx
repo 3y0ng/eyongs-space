@@ -100,7 +100,7 @@ const PixelDog = ({ onPeekClick, showHint }: PixelDogProps) => {
       className="fixed z-[9999] select-none"
       style={{
         left: x,
-        top: NAVBAR_HEIGHT - DOG_SIZE + 4, // Sit on top of the navbar border
+        bottom: 0,
         width: DOG_SIZE,
         height: DOG_SIZE,
         cursor: "pointer",
