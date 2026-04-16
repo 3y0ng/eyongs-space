@@ -1,6 +1,26 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PageTransition from "@/components/PageTransition";
 import { projects } from "@/data/projects";
+
+const ProjectImage = ({ src, alt }: { src: string; alt: string }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="relative w-full mb-10">
+      {/* Skeleton — same aspect ratio as a typical screenshot */}
+      {!loaded && (
+        <div className="w-full aspect-video rounded-lg bg-secondary animate-pulse" />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`w-full rounded-lg transition-opacity duration-300 ${loaded ? "opacity-100" : "absolute inset-0 opacity-0"}`}
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
+  );
+};
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -31,7 +51,7 @@ const ProjectDetail = () => {
         <p className="text-muted-foreground mb-10">{project.tagline}</p>
 
         {project.image ? (
-          <img src={project.image} alt={`${project.title} screenshot`} className="w-full rounded-lg mb-10" />
+          <ProjectImage src={project.image} alt={`${project.title} screenshot`} />
         ) : (
           <div className="w-full aspect-video rounded-lg bg-secondary mb-10 flex items-center justify-center">
             <span className="text-sm text-muted-foreground">Screenshot placeholder</span>
