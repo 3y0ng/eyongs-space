@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 const STATUS_MESSAGES = [
-  "shipping at 2am...",
   "0 to 1 mode...",
   "talking to users...",
   "iterating on feedback...",
   "one more feature then sleep...",
-  "pmf or bust...",
-  "cursor + coffee...",
+  "claude-code wrote this line...",
+  "reading docs...",
+  "404 pmf not found...",
 ];
 
 const NowPlaying = () => {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const interval = setInterval(() => setIdx((i) => (i + 1) % STATUS_MESSAGES.length), 3000);
+    const interval = setInterval(() => setIdx((i) => (i + 1) % STATUS_MESSAGES.length), 6000);
     return () => clearInterval(interval);
   }, []);
   return (
