@@ -41,7 +41,7 @@ export const projects: Project[] = [
     id: "givemap",
     title: "Givemap.quest",
     tagline: "Gamified effective altruism",
-    description: "An experimental UI for effective altruism. Designed as a gamified \"spy mission\" to increase donor engagement — a deep-dive into using agentic coding tools to build complex, non-standard web interfaces.",
+    description: "An experimental UI for effective altruism. Designed as a gamified \"spy mission\" to increase donor engagement, a deep-dive into using agentic coding tools to build complex, non-standard web interfaces.",
     status: "Exploring",
     color: "hsl(var(--accent))",
     link: "https://givemap.quest",

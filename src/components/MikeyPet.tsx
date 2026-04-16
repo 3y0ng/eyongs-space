@@ -27,16 +27,20 @@ const RUN_FRAMES = [runRight0, runRight1, runRight2];
 const SLEEP_FRAMES = [sleep0, sleep1];
 
 const FACTS = [
-  "i'm four years old! in human years at least.",
   "i prefer walks over watching e-yong code.",
-  "my favorite toy is a squeaky bone.",
-  "i once ate a USB cable. bad idea.",
-  "i sit on e-yong's keyboard for attention.",
+  "my favorite treats are cookies. session cookies.",
   "my dream? an infinite park with no leashes.",
   "i can hear a treat bag open from 3 rooms away.",
   "i don't understand typescript. but neither does e-yong sometimes.",
   "naps > deployments.",
   "i'm the real PM of this operation.",
+  "i fetch data and tennis balls.",
+  "e-yong says 'ship it' and i hear 'sit'.",
+  "my tail wags at 60fps.",
+  "i review all PRs. i approve everything.",
+  "i don't bite. unless you push to main.",
+  "every bug is a feature if you bark at claude enough.",
+  "agile? i've been sprinting my whole life.",
 ];
 
 type DogState = "idle" | "walk" | "run" | "sleep";
@@ -44,10 +48,10 @@ type DogState = "idle" | "walk" | "run" | "sleep";
 const DOG_SIZE = 56;
 const WALK_SPEED = 1.5;
 const RUN_SPEED = 3.5;
-const CHASE_THRESHOLD = 400; // px — start walking toward mouse
-const RUN_THRESHOLD = 180;   // px — close enough to run
+const CHASE_THRESHOLD = 450; // px — start walking toward mouse (2D distance)
+const RUN_THRESHOLD = 250;   // px — close enough to run (2D distance)
 const STOP_THRESHOLD = 30;   // px — close enough to stop
-const SLEEP_AFTER_MS = 30000;
+const SLEEP_AFTER_MS = 12000;
 const WANDER_PAUSE = [2000, 4000]; // idle pause range between wanders
 
 // 16x16 pixel bone cursor as a data URI
@@ -66,13 +70,14 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
 
   const posRef = useRef(window.innerWidth / 2 - DOG_SIZE / 2);
   const mouseX = useRef(window.innerWidth / 2);
+  const mouseY = useRef(window.innerHeight);
   const targetX = useRef(window.innerWidth / 2);
   const lastInteraction = useRef(Date.now());
   const idleTimer = useRef<ReturnType<typeof setTimeout>>();
   const frameRef = useRef<number>();
   const stateRef = useRef<DogState>("idle");
 
-  // Pick the right frames for the current state
+  // Pick the right frames for the current state and direction
   const frames =
     dogState === "run" ? RUN_FRAMES :
     dogState === "walk" ? WALK_FRAMES :
@@ -90,6 +95,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       mouseX.current = e.clientX;
+      mouseY.current = e.clientY;
       lastInteraction.current = Date.now();
     };
     window.addEventListener("mousemove", onMove);
@@ -127,7 +133,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
     const animate = () => {
       const currentX = posRef.current;
       const dogCenter = currentX + DOG_SIZE / 2;
-      const distToMouse = Math.abs(mouseX.current - dogCenter);
+      const dogY = window.innerHeight - 14 - DOG_SIZE / 2; // dog's vertical center
+      const dx = mouseX.current - dogCenter;
+      const dy = mouseY.current - dogY;
+      const distToMouse = Math.sqrt(dx * dx + dy * dy);
       const now = Date.now();
 
       // Sleep check
@@ -301,7 +310,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
           draggable={false}
         />
 
-        <p className="font-mono text-[7px] text-muted-foreground text-center">
+        <p className="font-mono text-[11px] text-muted-foreground text-center -mt-1">
           mikey
         </p>
       </div>
