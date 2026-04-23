@@ -192,15 +192,24 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       const diff = target - currentX;
       const absDiff = Math.abs(diff);
 
-      if (speed === 0 || absDiff < 2) {
-        // Arrived at destination or idle
+      // Determine if the dog should be idle right now.
+      // Only go idle when:
+      //  - mouse is right on top of the dog (speed === 0), OR
+      //  - we're wandering (mouse far away) and arrived at the wander target.
+      // Crucially, do NOT flip to idle just because the dog caught up to the
+      // moving mouse target — that causes rapid walk/idle oscillation at 60fps
+      // and resets the sprite animation before frames can advance.
+      const isChasing = distToMouse < CHASE_THRESHOLD;
+      const shouldIdle = speed === 0 || (!isChasing && absDiff < 2);
+
+      if (shouldIdle) {
         if (stateRef.current !== "idle") {
           stateRef.current = "idle";
           setDogState("idle");
         }
 
         // Schedule next wander if not already scheduled and mouse is far
-        if (!idleTimer.current && distToMouse >= CHASE_THRESHOLD) {
+        if (!idleTimer.current && !isChasing) {
           const pause = WANDER_PAUSE[0] + Math.random() * (WANDER_PAUSE[1] - WANDER_PAUSE[0]);
           idleTimer.current = setTimeout(() => {
             pickWanderTarget();

@@ -47,7 +47,7 @@ const PixelDog = ({ onPeekClick, showHint }: PixelDogProps) => {
         setBubble(null);
         setShowKonami(false);
         schedulePeek();
-      }, 4000);
+      }, 6000);
     }, delay);
   }, []);
 
@@ -62,7 +62,7 @@ const PixelDog = ({ onPeekClick, showHint }: PixelDogProps) => {
         setVisible(false);
         setBubble(null);
         schedulePeek();
-      }, 4000);
+      }, 6000);
     }, initialDelay);
 
     return clearTimers;
@@ -97,7 +97,7 @@ const PixelDog = ({ onPeekClick, showHint }: PixelDogProps) => {
         <div
           className="fixed z-[10000] animate-fade-in"
           style={{
-            bottom: PEEK_AMOUNT + 8,
+            bottom: PEEK_AMOUNT - 6,
             right: 24 + DOG_SIZE + 8,
           }}
         >
