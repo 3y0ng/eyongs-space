@@ -76,6 +76,11 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const idleTimer = useRef<ReturnType<typeof setTimeout>>();
   const frameRef = useRef<number>();
   const stateRef = useRef<DogState>("idle");
+  const lastStateChangeRef = useRef(0);
+
+  // Minimum time between state changes, prevents sprite animation from
+  // resetting to frame 0 when rAF fires at 60fps near threshold boundaries.
+  const STATE_CHANGE_COOLDOWN = 250; // ms
 
   // Pick the right frames for the current state and direction
   const frames =
@@ -143,6 +148,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       if (now - lastInteraction.current > SLEEP_AFTER_MS && stateRef.current !== "sleep") {
         stateRef.current = "sleep";
         setDogState("sleep");
+        lastStateChangeRef.current = now;
         if (idleTimer.current) {
           clearTimeout(idleTimer.current);
           idleTimer.current = undefined;
@@ -157,6 +163,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
           lastInteraction.current = now;
           stateRef.current = "idle";
           setDogState("idle");
+          lastStateChangeRef.current = now;
         }
         frameRef.current = requestAnimationFrame(animate);
         return;
@@ -202,10 +209,13 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       const isChasing = distToMouse < CHASE_THRESHOLD;
       const shouldIdle = speed === 0 || (!isChasing && absDiff < 2);
 
+      const canChangeState = now - lastStateChangeRef.current >= STATE_CHANGE_COOLDOWN;
+
       if (shouldIdle) {
-        if (stateRef.current !== "idle") {
+        if (stateRef.current !== "idle" && canChangeState) {
           stateRef.current = "idle";
           setDogState("idle");
+          lastStateChangeRef.current = now;
         }
 
         // Schedule next wander if not already scheduled and mouse is far
@@ -218,9 +228,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
         }
       } else {
         // Moving
-        if (stateRef.current !== newState) {
+        if (stateRef.current !== newState && canChangeState) {
           stateRef.current = newState;
           setDogState(newState);
+          lastStateChangeRef.current = now;
         }
         if (idleTimer.current) {
           clearTimeout(idleTimer.current);
