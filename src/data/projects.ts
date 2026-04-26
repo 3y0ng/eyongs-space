@@ -39,6 +39,16 @@ export const projects: Project[] = [
     image: curiloScreenshot,
   },
   {
+    id: "lee-education",
+    title: "Lee Education",
+    tagline: "Tutoring business scaled to four locations",
+    description: "Built a tutoring business from a living room as a college freshman to support family, scaling to 6-figure revenue and four brick-and-mortar locations within three years. Now passed on to a younger brother to carry forward.",
+    status: "Shipped",
+    color: "hsl(var(--secondary))",
+    link: "https://lee.education",
+    image: leeEducationScreenshot,
+  },
+  {
     id: "grandpa-site",
     title: "Grandpa site",
     tagline: "A little site I made for my grandpa",
@@ -57,15 +67,5 @@ export const projects: Project[] = [
     color: "hsl(var(--accent))",
     link: "https://givemap.quest",
     image: givemapScreenshot,
-  },
-  {
-    id: "lee-education",
-    title: "Lee Education",
-    tagline: "Tutoring business scaled to four locations",
-    description: "Built a tutoring business from a living room as a college freshman to support family, scaling to 6-figure revenue and four brick-and-mortar locations within three years. Now passed on to a younger brother to carry forward.",
-    status: "Shipped",
-    color: "hsl(var(--secondary))",
-    link: "https://lee.education",
-    image: leeEducationScreenshot,
   },
 ];
