@@ -2,6 +2,7 @@ import givemapScreenshot from "@/assets/givemap-screenshot.png";
 import curiloScreenshot from "@/assets/curilo-screenshot.png";
 import leeEducationScreenshot from "@/assets/lee-education-screenshot.png";
 import pyreelScreenshot from "@/assets/pyreel-screenshot.png";
+import grandpaSiteScreenshot from "@/assets/grandpa-site-screenshot.png";
 
 export type ProjectStatus = "Active" | "Shipped" | "Exploring";
 
@@ -36,6 +37,16 @@ export const projects: Project[] = [
     color: "hsl(var(--primary))",
     link: "https://curilo.ai",
     image: curiloScreenshot,
+  },
+  {
+    id: "grandpa-site",
+    title: "Grandpa site",
+    tagline: "A little site I made for my grandpa",
+    description: "An accessible web portal built for my grandfather, an 80-year-old Mandarin/Hokkien speaker in Singapore. Combines news with text-to-speech, a TV interface with curated channels, games, and weather — designed to prioritize simplicity over technical complexity.",
+    status: "Shipped",
+    color: "hsl(var(--secondary))",
+    link: "https://3y0ng.github.io/grandpa-sg-site/",
+    image: grandpaSiteScreenshot,
   },
   {
     id: "givemap",
