@@ -51,6 +51,7 @@ const RUN_SPEED = 3.5;
 const CHASE_THRESHOLD = 450; // px — start walking toward mouse (2D distance)
 const RUN_THRESHOLD = 250;   // px — close enough to run (2D distance)
 const STOP_THRESHOLD = 30;   // px — close enough to stop
+const THRESHOLD_HYSTERESIS = 30; // px — buffer to avoid state flicker at boundaries
 const SLEEP_AFTER_MS = 12000;
 const WANDER_PAUSE = [2000, 4000]; // idle pause range between wanders
 
@@ -167,12 +168,22 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       let speed: number;
       let newState: DogState;
 
-      if (distToMouse < STOP_THRESHOLD) {
+      // Hysteresis on the speed thresholds: once committed to a locomotion
+      // state, stay in it until distance moves clearly past the boundary.
+      // Prevents per-rAF state flicker (which resets the sprite frame to 0).
+      const wasRunning = stateRef.current === "run";
+      const wasIdle = stateRef.current === "idle";
+      const stopBound = STOP_THRESHOLD + (wasIdle ? THRESHOLD_HYSTERESIS : 0);
+      const runBound = wasRunning
+        ? RUN_THRESHOLD + THRESHOLD_HYSTERESIS
+        : RUN_THRESHOLD - THRESHOLD_HYSTERESIS;
+
+      if (distToMouse < stopBound) {
         // Close enough — sit idle
         target = currentX;
         speed = 0;
         newState = "idle";
-      } else if (distToMouse < RUN_THRESHOLD) {
+      } else if (distToMouse < runBound) {
         // Very close — run to mouse
         target = mouseX.current - DOG_SIZE / 2;
         speed = RUN_SPEED;
