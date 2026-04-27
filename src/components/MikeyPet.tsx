@@ -100,6 +100,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
     const onMove = (e: MouseEvent) => {
       mouseX.current = e.clientX;
       mouseY.current = e.clientY;
+      hasMouseMoved.current = true;
       lastInteraction.current = Date.now();
     };
     window.addEventListener("mousemove", onMove);
