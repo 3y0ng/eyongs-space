@@ -246,7 +246,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       // moving mouse target — that causes rapid walk/idle oscillation at 60fps
       // and resets the sprite animation before frames can advance.
       const isChasing = mouseEngaged && distToMouse < CHASE_THRESHOLD;
-      const shouldIdle = speed === 0 || (!isChasing && absDiff < 2);
+      const shouldIdle = !isSpawnWalking && (speed === 0 || (!isChasing && absDiff < 2));
 
       if (shouldIdle) {
         if (stateRef.current !== "idle") {
@@ -357,9 +357,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
         <img
           src={frameSrc}
           alt="Mikey the dog"
-          className="w-full h-full"
+          className="w-full h-full opacity-100"
           style={{
             imageRendering: "pixelated",
+            objectFit: "contain",
             transform: facingRight ? "scaleX(1)" : "scaleX(-1)",
           }}
           draggable={false}
