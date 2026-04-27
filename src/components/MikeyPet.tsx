@@ -70,9 +70,12 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const [showBubble, setShowBubble] = useState(true);
 
   const posRef = useRef(window.innerWidth / 2 - DOG_SIZE / 2);
-  const mouseX = useRef(window.innerWidth / 2);
-  const mouseY = useRef(window.innerHeight);
-  const targetX = useRef(window.innerWidth / 2);
+  // Place mouse off-screen initially so the dog wanders instead of sitting
+  // on top of the cursor (which would otherwise lock him into idle).
+  const mouseX = useRef(-9999);
+  const mouseY = useRef(-9999);
+  const targetX = useRef(Math.random() * (window.innerWidth - DOG_SIZE));
+  const hasMouseMoved = useRef(false);
   const lastInteraction = useRef(Date.now());
   const idleTimer = useRef<ReturnType<typeof setTimeout>>();
   const frameRef = useRef<number>();
