@@ -216,7 +216,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       // Crucially, do NOT flip to idle just because the dog caught up to the
       // moving mouse target — that causes rapid walk/idle oscillation at 60fps
       // and resets the sprite animation before frames can advance.
-      const isChasing = distToMouse < CHASE_THRESHOLD;
+      const isChasing = mouseEngaged && distToMouse < CHASE_THRESHOLD;
       const shouldIdle = speed === 0 || (!isChasing && absDiff < 2);
 
       if (shouldIdle) {
