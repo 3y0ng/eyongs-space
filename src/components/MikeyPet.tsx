@@ -70,9 +70,12 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const [showBubble, setShowBubble] = useState(true);
 
   const posRef = useRef(window.innerWidth / 2 - DOG_SIZE / 2);
-  const mouseX = useRef(window.innerWidth / 2);
-  const mouseY = useRef(window.innerHeight);
-  const targetX = useRef(window.innerWidth / 2);
+  // Place mouse off-screen initially so the dog wanders instead of sitting
+  // on top of the cursor (which would otherwise lock him into idle).
+  const mouseX = useRef(-9999);
+  const mouseY = useRef(-9999);
+  const targetX = useRef(Math.random() * (window.innerWidth - DOG_SIZE));
+  const hasMouseMoved = useRef(false);
   const lastInteraction = useRef(Date.now());
   const idleTimer = useRef<ReturnType<typeof setTimeout>>();
   const frameRef = useRef<number>();
@@ -97,6 +100,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
     const onMove = (e: MouseEvent) => {
       mouseX.current = e.clientX;
       mouseY.current = e.clientY;
+      hasMouseMoved.current = true;
       lastInteraction.current = Date.now();
     };
     window.addEventListener("mousemove", onMove);
@@ -178,23 +182,25 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
         ? RUN_THRESHOLD + THRESHOLD_HYSTERESIS
         : RUN_THRESHOLD - THRESHOLD_HYSTERESIS;
 
-      if (distToMouse < stopBound) {
+      const mouseEngaged = hasMouseMoved.current;
+
+      if (mouseEngaged && distToMouse < stopBound) {
         // Close enough — sit idle
         target = currentX;
         speed = 0;
         newState = "idle";
-      } else if (distToMouse < runBound) {
+      } else if (mouseEngaged && distToMouse < runBound) {
         // Very close — run to mouse
         target = mouseX.current - DOG_SIZE / 2;
         speed = RUN_SPEED;
         newState = "run";
-      } else if (distToMouse < CHASE_THRESHOLD) {
+      } else if (mouseEngaged && distToMouse < CHASE_THRESHOLD) {
         // Nearby — walk to mouse
         target = mouseX.current - DOG_SIZE / 2;
         speed = WALK_SPEED;
         newState = "walk";
       } else {
-        // Far from mouse — wander
+        // Far from mouse (or no mouse activity yet) — wander
         target = targetX.current;
         speed = WALK_SPEED;
         newState = "walk";
@@ -210,7 +216,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       // Crucially, do NOT flip to idle just because the dog caught up to the
       // moving mouse target — that causes rapid walk/idle oscillation at 60fps
       // and resets the sprite animation before frames can advance.
-      const isChasing = distToMouse < CHASE_THRESHOLD;
+      const isChasing = mouseEngaged && distToMouse < CHASE_THRESHOLD;
       const shouldIdle = speed === 0 || (!isChasing && absDiff < 2);
 
       if (shouldIdle) {
