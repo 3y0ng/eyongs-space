@@ -54,6 +54,13 @@ const STOP_THRESHOLD = 30;   // px — close enough to stop
 const THRESHOLD_HYSTERESIS = 30; // px — buffer to avoid state flicker at boundaries
 const SLEEP_AFTER_MS = 12000;
 const WANDER_PAUSE = [2000, 4000]; // idle pause range between wanders
+const SPAWN_WALK_MS = 2200;
+
+const clampToViewport = (value: number) =>
+  Math.max(0, Math.min(window.innerWidth - DOG_SIZE, value));
+
+const getSpawnX = () => clampToViewport(24);
+const getInitialTargetX = () => clampToViewport(window.innerWidth * 0.72);
 
 // 16x16 pixel bone cursor as a data URI
 const BONE_CURSOR = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23fff%7D%3C/style%3E%3Crect x='2' y='6' width='12' height='4'/%3E%3Crect x='0' y='4' width='4' height='2'/%3E%3Crect x='0' y='10' width='4' height='2'/%3E%3Crect x='12' y='4' width='4' height='2'/%3E%3Crect x='12' y='10' width='4' height='2'/%3E%3C/svg%3E") 8 8, auto`;
@@ -63,23 +70,24 @@ interface MikeyPetProps {
 }
 
 const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
-  const [x, setX] = useState(() => window.innerWidth / 2 - DOG_SIZE / 2);
+  const [x, setX] = useState(getSpawnX);
   const [facingRight, setFacingRight] = useState(true);
-  const [dogState, setDogState] = useState<DogState>("idle");
+  const [dogState, setDogState] = useState<DogState>("walk");
   const [factIndex, setFactIndex] = useState(0);
   const [showBubble, setShowBubble] = useState(true);
 
-  const posRef = useRef(window.innerWidth / 2 - DOG_SIZE / 2);
+  const posRef = useRef(getSpawnX());
   // Place mouse off-screen initially so the dog wanders instead of sitting
   // on top of the cursor (which would otherwise lock him into idle).
   const mouseX = useRef(-9999);
   const mouseY = useRef(-9999);
-  const targetX = useRef(Math.random() * (window.innerWidth - DOG_SIZE));
+  const targetX = useRef(getInitialTargetX());
   const hasMouseMoved = useRef(false);
+  const spawnStartedAt = useRef(Date.now());
   const lastInteraction = useRef(Date.now());
   const idleTimer = useRef<ReturnType<typeof setTimeout>>();
   const frameRef = useRef<number>();
-  const stateRef = useRef<DogState>("idle");
+  const stateRef = useRef<DogState>("walk");
 
   // Pick the right frames for the current state and direction
   const frames =
@@ -130,7 +138,23 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   }, []);
 
   const pickWanderTarget = useCallback(() => {
-    targetX.current = Math.random() * (window.innerWidth - DOG_SIZE);
+    const maxX = Math.max(0, window.innerWidth - DOG_SIZE);
+    const currentX = posRef.current;
+
+    if (maxX < 160) {
+      targetX.current = Math.random() * maxX;
+      return;
+    }
+
+    for (let attempt = 0; attempt < 8; attempt += 1) {
+      const candidate = Math.random() * maxX;
+      if (Math.abs(candidate - currentX) > Math.min(160, maxX * 0.35)) {
+        targetX.current = candidate;
+        return;
+      }
+    }
+
+    targetX.current = currentX < maxX / 2 ? maxX - 24 : 24;
   }, []);
 
   // Main animation loop
