@@ -167,9 +167,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       const dy = mouseY.current - dogY;
       const distToMouse = Math.sqrt(dx * dx + dy * dy);
       const now = Date.now();
+      const isSpawnWalking = now - spawnStartedAt.current < SPAWN_WALK_MS;
 
       // Sleep check
-      if (now - lastInteraction.current > SLEEP_AFTER_MS && stateRef.current !== "sleep") {
+      if (!isSpawnWalking && now - lastInteraction.current > SLEEP_AFTER_MS && stateRef.current !== "sleep") {
         stateRef.current = "sleep";
         setDogState("sleep");
         if (idleTimer.current) {
@@ -208,7 +209,11 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
 
       const mouseEngaged = hasMouseMoved.current;
 
-      if (mouseEngaged && distToMouse < stopBound) {
+      if (isSpawnWalking) {
+        target = targetX.current;
+        speed = WALK_SPEED;
+        newState = "walk";
+      } else if (mouseEngaged && distToMouse < stopBound) {
         // Close enough — sit idle
         target = currentX;
         speed = 0;
