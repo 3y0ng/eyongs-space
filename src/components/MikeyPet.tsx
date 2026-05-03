@@ -75,6 +75,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const [dogState, setDogState] = useState<DogState>("walk");
   const [factIndex, setFactIndex] = useState(0);
   const [showBubble, setShowBubble] = useState(true);
+  const [showDismissPrompt, setShowDismissPrompt] = useState(false);
 
   const posRef = useRef(getSpawnX());
   // Place mouse off-screen initially so the dog wanders instead of sitting
