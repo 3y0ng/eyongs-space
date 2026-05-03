@@ -292,7 +292,6 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
     };
   }, [pickWanderTarget]);
 
-  const [showDismissPrompt, setShowDismissPrompt] = useState(false);
 
   const handleClick = () => {
     lastInteraction.current = Date.now();
