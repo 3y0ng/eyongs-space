@@ -3,6 +3,10 @@ import { useState, useEffect, useRef } from "react";
 /**
  * Cycles through an array of image sources at a given FPS.
  * Returns the current frame's src string.
+ *
+ * Uses an animation key (first frame) so the cycle restarts cleanly
+ * when the animation set changes, but is stable across re-renders
+ * even when the parent passes a new array literal each render.
  */
 export const useSpriteAnimation = (
   frames: string[],
@@ -10,36 +14,26 @@ export const useSpriteAnimation = (
   playing: boolean = true,
 ): string => {
   const [frameIndex, setFrameIndex] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval>>();
   const framesRef = useRef(frames);
+  framesRef.current = frames;
 
-  // Detect when the actual animation set changes (not just the array reference)
-  // by comparing the first frame src — each animation set has unique frame URLs.
-  const prevFirstFrame = useRef(frames[0]);
-  if (frames[0] !== prevFirstFrame.current) {
-    prevFirstFrame.current = frames[0];
-    framesRef.current = frames;
-    // Reset synchronously so we don't flash a stale frame
-    setFrameIndex(0);
-  } else {
-    framesRef.current = frames;
-  }
+  // Stable identity for the current animation set.
+  const animKey = frames[0] ?? "";
+  const frameCount = frames.length;
 
   useEffect(() => {
-    if (!playing || frames.length <= 1) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      return;
-    }
+    // Reset to first frame when the animation set changes.
+    setFrameIndex(0);
+
+    if (!playing || frameCount <= 1) return;
 
     const ms = 1000 / fps;
-    intervalRef.current = setInterval(() => {
+    const id = setInterval(() => {
       setFrameIndex((i) => (i + 1) % framesRef.current.length);
     }, ms);
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [frames.length, fps, playing, frames[0]]);
+    return () => clearInterval(id);
+  }, [animKey, frameCount, fps, playing]);
 
   return frames[frameIndex] ?? frames[0];
 };
