@@ -20,7 +20,7 @@ When I ran a tutoring company with over 500 students, I saw nine-year-olds submi
 
 Do Not Blame the Robots
 
-AI may be a convenient scapegoat, but it does not explain the data. In 2022, only 26% of U.S. eighth graders were proficient in writing, based on a national assessment last conducted in 2011. Reading scores have been falling steadily for more than a decade. The truth is, we lost our grip on literacy long before students had access to chatbots.
+AI may be a convenient scapegoat, but it does not explain the data. In 2022, only 26% of U.S. eighth graders were proficient in writing. Reading scores have been falling steadily for more than a decade. The truth is, we lost our grip on literacy long before students had access to chatbots.
 
 What Is Really Going On
 
