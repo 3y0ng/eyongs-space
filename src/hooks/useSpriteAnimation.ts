@@ -4,36 +4,50 @@ import { useState, useEffect, useRef } from "react";
  * Cycles through an array of image sources at a given FPS.
  * Returns the current frame's src string.
  *
- * Uses an animation key (first frame) so the cycle restarts cleanly
- * when the animation set changes, but is stable across re-renders
- * even when the parent passes a new array literal each render.
+ * Time-based: the displayed frame is computed from wall-clock elapsed time
+ * since the animation set started. Robust against rapid React re-renders or
+ * state oscillation — frames never freeze on index 0 because we never reset
+ * a counter; we just read elapsed time.
  */
 export const useSpriteAnimation = (
   frames: string[],
   fps: number = 8,
   playing: boolean = true,
 ): string => {
-  const [frameIndex, setFrameIndex] = useState(0);
-  const framesRef = useRef(frames);
-  framesRef.current = frames;
+  // A tiny tick state used only to force re-renders at the animation cadence
+  // when the parent isn't already re-rendering for other reasons.
+  const [, forceRender] = useState(0);
 
-  // Stable identity for the current animation set.
+  // Reset the animation start time when the animation set actually changes
+  // (detected via the first frame's URL — stable per animation set).
   const animKey = frames[0] ?? "";
-  const frameCount = frames.length;
+  const prevAnimKey = useRef(animKey);
+  const startTimeRef = useRef(
+    typeof performance !== "undefined" ? performance.now() : Date.now(),
+  );
+
+  if (animKey !== prevAnimKey.current) {
+    prevAnimKey.current = animKey;
+    startTimeRef.current =
+      typeof performance !== "undefined" ? performance.now() : Date.now();
+  }
 
   useEffect(() => {
-    // Reset to first frame when the animation set changes.
-    setFrameIndex(0);
-
-    if (!playing || frameCount <= 1) return;
-
+    if (!playing || frames.length <= 1) return;
     const ms = 1000 / fps;
-    const id = setInterval(() => {
-      setFrameIndex((i) => (i + 1) % framesRef.current.length);
-    }, ms);
-
+    const id = setInterval(() => forceRender((n) => n + 1), ms);
     return () => clearInterval(id);
-  }, [animKey, frameCount, fps, playing]);
+  }, [fps, playing, frames.length]);
+
+  if (frames.length === 0) return "";
+
+  const now =
+    typeof performance !== "undefined" ? performance.now() : Date.now();
+  const elapsed = now - startTimeRef.current;
+  const ms = 1000 / fps;
+  const frameIndex = playing
+    ? Math.floor(elapsed / ms) % frames.length
+    : 0;
 
   return frames[frameIndex] ?? frames[0];
 };
