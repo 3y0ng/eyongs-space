@@ -26,6 +26,18 @@ const WALK_FRAMES = [walkRight0, walkRight1, walkRight2, walkRight3];
 const RUN_FRAMES = [runRight0, runRight1, runRight2];
 const SLEEP_FRAMES = [sleep0, sleep1];
 
+// Kick off PNG decoding the moment this module is imported (which happens
+// when the Konami code unlocks Mikey, ~3s before MikeyPet actually mounts
+// thanks to the bone rain). This way frames are warm in the cache by spawn.
+if (typeof window !== "undefined") {
+  [...SIT_IDLE_FRAMES, ...WALK_FRAMES, ...RUN_FRAMES, ...SLEEP_FRAMES].forEach(
+    (src) => {
+      const img = new Image();
+      img.src = src;
+    },
+  );
+}
+
 const FACTS = [
   "i prefer walks over watching e-yong code.",
   "my favorite treats are cookies. session cookies.",
