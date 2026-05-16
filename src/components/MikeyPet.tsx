@@ -6,11 +6,17 @@ import sitIdle0 from "@/assets/dog_sprites/sit_idle/sit_idle_00.png";
 import sitIdle1 from "@/assets/dog_sprites/sit_idle/sit_idle_01.png";
 import sitIdle2 from "@/assets/dog_sprites/sit_idle/sit_idle_02.png";
 
-// Walk
+// Walk right
 import walkRight0 from "@/assets/dog_sprites/walk_right/walk_right_00.png";
 import walkRight1 from "@/assets/dog_sprites/walk_right/walk_right_01.png";
 import walkRight2 from "@/assets/dog_sprites/walk_right/walk_right_02.png";
 import walkRight3 from "@/assets/dog_sprites/walk_right/walk_right_03.png";
+
+// Walk left
+import walkLeft0 from "@/assets/dog_sprites/walk_left/walk_left_00.png";
+import walkLeft1 from "@/assets/dog_sprites/walk_left/walk_left_01.png";
+import walkLeft2 from "@/assets/dog_sprites/walk_left/walk_left_02.png";
+import walkLeft3 from "@/assets/dog_sprites/walk_left/walk_left_03.png";
 
 // Run
 import runRight0 from "@/assets/dog_sprites/run_right/run_right_00.png";
@@ -22,7 +28,8 @@ import sleep0 from "@/assets/dog_sprites/sleep/sleep_00.png";
 import sleep1 from "@/assets/dog_sprites/sleep/sleep_01.png";
 
 const SIT_IDLE_FRAMES = [sitIdle0, sitIdle1, sitIdle2];
-const WALK_FRAMES = [walkRight0, walkRight1, walkRight2, walkRight3];
+const WALK_RIGHT_FRAMES = [walkRight0, walkRight1, walkRight2, walkRight3];
+const WALK_LEFT_FRAMES = [walkLeft0, walkLeft1, walkLeft2, walkLeft3];
 const RUN_FRAMES = [runRight0, runRight1, runRight2];
 const SLEEP_FRAMES = [sleep0, sleep1];
 
