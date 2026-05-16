@@ -61,13 +61,14 @@ const STOP_THRESHOLD = 30;   // px — close enough to stop
 const THRESHOLD_HYSTERESIS = 30; // px — buffer to avoid state flicker at boundaries
 const SLEEP_AFTER_MS = 12000;
 const WANDER_PAUSE = [2000, 4000]; // idle pause range between wanders
-const SPAWN_WALK_MS = 2200;
+const SPAWN_RUN_MS = 2600;
 
 const clampToViewport = (value: number) =>
   Math.max(0, Math.min(window.innerWidth - DOG_SIZE, value));
 
-const getSpawnX = () => clampToViewport(24);
-const getInitialTargetX = () => clampToViewport(window.innerWidth * 0.72);
+// Spawn just off the right edge of the screen so Mikey runs in.
+const getSpawnX = () => window.innerWidth + DOG_SIZE;
+const getInitialTargetX = () => clampToViewport(window.innerWidth * 0.28);
 
 // 16x16 pixel bone cursor as a data URI
 const BONE_CURSOR = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23fff%7D%3C/style%3E%3Crect x='2' y='6' width='12' height='4'/%3E%3Crect x='0' y='4' width='4' height='2'/%3E%3Crect x='0' y='10' width='4' height='2'/%3E%3Crect x='12' y='4' width='4' height='2'/%3E%3Crect x='12' y='10' width='4' height='2'/%3E%3C/svg%3E") 8 8, auto`;
