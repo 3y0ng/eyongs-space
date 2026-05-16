@@ -406,7 +406,8 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
           style={{
             imageRendering: "pixelated",
             objectFit: "contain",
-            transform: facingRight ? "scaleX(1)" : "scaleX(-1)",
+            transform:
+              dogState === "walk" || facingRight ? "scaleX(1)" : "scaleX(-1)",
             opacity: 1,
           }}
           draggable={false}
