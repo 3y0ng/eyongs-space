@@ -1,56 +1,47 @@
+## Diagnosis
 
+Mikey worked in the claude-code preview because the local preview likely had the sprite PNGs cached and served them with lower latency. In Chrome/Lovable preview, each animation frame is being swapped as a separate `<img src>`. The browser network log shows repeated image requests for dog frames, many ending in `net::ERR_ABORTED`, followed by successful retries around ~660ms later.
 
-## Make the Site More Interactive and Unique
+That explains both symptoms:
 
-Here are ideas ranked by wow-factor, all staying true to the terminal/CLI aesthetic.
+- **Invisible for the first few seconds:** the current frame URL changes before the previous image finishes loading, so Chrome aborts the old request and the `<img>` has nothing decoded to paint yet.
+- **Stuck standing / floating:** movement is driven by one loop, but the visible sprite is blocked by image decoding/request churn, so the element moves while the frame appears frozen or blank.
 
----
+The asset files themselves are present and valid. The issue is not missing walk/run frames; it is the rendering strategy.
 
-### 1. Custom Cursor with Trail Effect
-Replace the default cursor with a small terminal-green dot that leaves a fading trail as it moves. Subtle but immediately signals "this site is different." Pure CSS + a lightweight mouse-move listener.
+## Plan
 
-**Files:** `src/components/CustomCursor.tsx` (new), `src/App.tsx`, `src/index.css`
+1. **Stop swapping separate PNG URLs during animation**
+   - Replace Mikey's `<img src={frameSrc}>` frame swapping with a CSS sprite-sheet renderer.
+   - Use one loaded image per animation state instead of repeated network requests per frame.
 
----
+2. **Generate reliable sprite strips from the existing assets**
+   - Create horizontal sprite-strip assets from the existing `walk_right`, `walk_left`, `run_right`, `run_right_2`, `sit_idle`, and `sleep` PNG frames.
+   - Normalize each strip to stable frame dimensions using the existing `sprites.json` max frame data so the dog does not jump between frames.
 
-### 2. Konami Code Easter Egg
-Typing a secret key sequence (e.g. the classic Konami code, or something custom like "sudo") triggers a fun easter egg -- the whole page briefly flips to a retro green-on-black CRT scanline effect with a joke message like `> access granted. welcome, hacker.` Disappears after a few seconds. Memorable and shareable.
+3. **Update MikeyPet to use sprite metadata**
+   - Select the correct strip by `dogState` and direction.
+   - Animate with `background-position` or a deterministic frame index, while keeping movement independent.
+   - Prefer actual `walk_left` frames instead of flipping right-facing frames when moving left.
 
-**Files:** `src/hooks/useKonamiCode.ts` (new), `src/components/EasterEgg.tsx` (new), `src/App.tsx`
+4. **Preload Mikey assets before showing the pet**
+   - During the bone-rain activation overlay, preload the sprite strips.
+   - Only mount/show Mikey after the required strips are decoded, with a short fallback timeout so activation never hangs.
 
----
+5. **Simplify the animation hook**
+   - Convert `useSpriteAnimation` from URL swapping to returning a numeric frame index, or add a new hook for frame indices.
+   - Keep hooks unconditionally called to avoid the previous React hook-order error.
 
-### 3. Interactive Command Palette (Ctrl+K / Cmd+K)
-A site-wide command palette that lets visitors navigate pages, jump to projects/essays, or trigger the easter egg -- all via keyboard. Feels like a real dev tool. Uses the existing `cmdk` library already in the project.
+6. **Verify in Chrome/Lovable preview**
+   - Activate Mikey with the Konami code.
+   - Confirm he is visible immediately after the activation overlay.
+   - Confirm walking/running use multiple frames while moving, with no floating single-frame pose.
+   - Check network requests no longer show continuous aborted per-frame dog image loads.
 
-**Files:** `src/components/CommandPalette.tsx` (new), `src/App.tsx`
+## Files likely touched
 
----
+- `src/components/MikeyPet.tsx`
+- `src/hooks/useSpriteAnimation.ts` or a new frame-index hook
+- Generated sprite-strip assets under `src/assets/dog_sprites/`
 
-### 4. Magnetic Hover Effect on Project Cards
-When hovering near a project card, it subtly tilts/shifts toward the cursor (like a magnetic pull), with a soft glow on the border. Makes the project list feel alive without being distracting.
-
-**Files:** `src/components/ProjectCard.tsx` (update)
-
----
-
-### 5. Parallax Scrolling on Section Headers
-The `// projects` and `// essays` headers scroll at a slightly different speed than the content, creating a subtle depth effect. Lightweight, no library needed -- just a scroll listener adjusting `translateY`.
-
-**Files:** `src/pages/Index.tsx` (update)
-
----
-
-### 6. "Now Playing" Status in Footer
-A small animated element in the footer that cycles through status messages like `compiling...`, `pushing to main...`, `debugging at 2am...` with a blinking dot. Adds personality and life to the bottom of every page.
-
-**Files:** `src/components/Footer.tsx` (update)
-
----
-
-### Summary
-- **New files:** `CustomCursor.tsx`, `useKonamiCode.ts`, `EasterEgg.tsx`, `CommandPalette.tsx`
-- **Modified:** `App.tsx`, `index.css`, `ProjectCard.tsx`, `Index.tsx`, `Footer.tsx`
-
-All pure frontend, no libraries to install (cmdk is already available). Each feature is independent so you can pick and choose.
-
+This keeps the existing behavior and assets, but makes the browser rendering robust in the Lovable iframe and normal Chrome.
