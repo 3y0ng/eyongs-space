@@ -76,6 +76,40 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const [factIndex, setFactIndex] = useState(0);
   const [showBubble, setShowBubble] = useState(true);
   const [showDismissPrompt, setShowDismissPrompt] = useState(false);
+  const [assetsReady, setAssetsReady] = useState(false);
+
+  // Preload every sprite frame before showing Mikey. In the Lovable
+  // iframe, Vite serves PNGs slowly enough that swapping `<img src>`
+  // mid-animation causes net::ERR_ABORTED and visible blanks/freezes.
+  // Decoding everything up front means subsequent swaps hit the cache.
+  useEffect(() => {
+    const all = [
+      ...SIT_IDLE_FRAMES,
+      ...WALK_FRAMES,
+      ...RUN_FRAMES,
+      ...SLEEP_FRAMES,
+    ];
+    let cancelled = false;
+    let remaining = all.length;
+    const done = () => {
+      remaining -= 1;
+      if (remaining <= 0 && !cancelled) setAssetsReady(true);
+    };
+    all.forEach((src) => {
+      const img = new Image();
+      img.onload = done;
+      img.onerror = done;
+      img.src = src;
+    });
+    // Safety: never block Mikey forever if a decode hangs.
+    const timeout = setTimeout(() => {
+      if (!cancelled) setAssetsReady(true);
+    }, 3000);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, []);
 
   const posRef = useRef(getSpawnX());
   // Place mouse off-screen initially so the dog wanders instead of sitting
@@ -357,11 +391,12 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
         <img
           src={frameSrc}
           alt="Mikey the dog"
-          className="w-full h-full opacity-100"
+          className="w-full h-full transition-opacity duration-200"
           style={{
             imageRendering: "pixelated",
             objectFit: "contain",
             transform: facingRight ? "scaleX(1)" : "scaleX(-1)",
+            opacity: assetsReady ? 1 : 0,
           }}
           draggable={false}
         />
