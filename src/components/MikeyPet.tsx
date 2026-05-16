@@ -79,8 +79,10 @@ interface MikeyPetProps {
 
 const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const [x, setX] = useState(getSpawnX);
-  const [facingRight, setFacingRight] = useState(true);
-  const [dogState, setDogState] = useState<DogState>("walk");
+  // Mikey enters from the right, so he starts facing left.
+  // (facingRight default is overridden here.)
+  const [facingRight, setFacingRight] = useState(false);
+  const [dogState, setDogState] = useState<DogState>("run");
   const [factIndex, setFactIndex] = useState(0);
   const [showBubble, setShowBubble] = useState(true);
   const [showDismissPrompt, setShowDismissPrompt] = useState(false);
@@ -93,7 +95,8 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   useEffect(() => {
     const all = [
       ...SIT_IDLE_FRAMES,
-      ...WALK_FRAMES,
+      ...WALK_RIGHT_FRAMES,
+      ...WALK_LEFT_FRAMES,
       ...RUN_FRAMES,
       ...SLEEP_FRAMES,
     ];
@@ -130,12 +133,12 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const lastInteraction = useRef(Date.now());
   const idleTimer = useRef<ReturnType<typeof setTimeout>>();
   const frameRef = useRef<number>();
-  const stateRef = useRef<DogState>("walk");
+  const stateRef = useRef<DogState>("run");
 
   // Pick the right frames for the current state and direction
   const frames =
     dogState === "run" ? RUN_FRAMES :
-    dogState === "walk" ? WALK_FRAMES :
+    dogState === "walk" ? (facingRight ? WALK_RIGHT_FRAMES : WALK_LEFT_FRAMES) :
     dogState === "sleep" ? SLEEP_FRAMES :
     SIT_IDLE_FRAMES;
 
@@ -210,10 +213,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       const dy = mouseY.current - dogY;
       const distToMouse = Math.sqrt(dx * dx + dy * dy);
       const now = Date.now();
-      const isSpawnWalking = now - spawnStartedAt.current < SPAWN_WALK_MS;
+      const isSpawnRunning = now - spawnStartedAt.current < SPAWN_RUN_MS;
 
       // Sleep check
-      if (!isSpawnWalking && now - lastInteraction.current > SLEEP_AFTER_MS && stateRef.current !== "sleep") {
+      if (!isSpawnRunning && now - lastInteraction.current > SLEEP_AFTER_MS && stateRef.current !== "sleep") {
         stateRef.current = "sleep";
         setDogState("sleep");
         if (idleTimer.current) {
@@ -252,10 +255,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
 
       const mouseEngaged = hasMouseMoved.current;
 
-      if (isSpawnWalking) {
+      if (isSpawnRunning) {
         target = targetX.current;
-        speed = WALK_SPEED;
-        newState = "walk";
+        speed = RUN_SPEED;
+        newState = "run";
       } else if (mouseEngaged && distToMouse < stopBound) {
         // Close enough — sit idle
         target = currentX;
@@ -289,7 +292,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       // moving mouse target — that causes rapid walk/idle oscillation at 60fps
       // and resets the sprite animation before frames can advance.
       const isChasing = mouseEngaged && distToMouse < CHASE_THRESHOLD;
-      const shouldIdle = !isSpawnWalking && (speed === 0 || (!isChasing && absDiff < 2));
+      const shouldIdle = !isSpawnRunning && (speed === 0 || (!isChasing && absDiff < 2));
 
       if (shouldIdle) {
         if (stateRef.current !== "idle") {
@@ -404,7 +407,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
             imageRendering: "pixelated",
             objectFit: "contain",
             transform: facingRight ? "scaleX(1)" : "scaleX(-1)",
-            opacity: assetsReady ? 1 : 0,
+            opacity: 1,
           }}
           draggable={false}
         />
