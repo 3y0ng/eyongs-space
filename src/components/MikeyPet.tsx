@@ -6,11 +6,17 @@ import sitIdle0 from "@/assets/dog_sprites/sit_idle/sit_idle_00.png";
 import sitIdle1 from "@/assets/dog_sprites/sit_idle/sit_idle_01.png";
 import sitIdle2 from "@/assets/dog_sprites/sit_idle/sit_idle_02.png";
 
-// Walk
+// Walk right
 import walkRight0 from "@/assets/dog_sprites/walk_right/walk_right_00.png";
 import walkRight1 from "@/assets/dog_sprites/walk_right/walk_right_01.png";
 import walkRight2 from "@/assets/dog_sprites/walk_right/walk_right_02.png";
 import walkRight3 from "@/assets/dog_sprites/walk_right/walk_right_03.png";
+
+// Walk left
+import walkLeft0 from "@/assets/dog_sprites/walk_left/walk_left_00.png";
+import walkLeft1 from "@/assets/dog_sprites/walk_left/walk_left_01.png";
+import walkLeft2 from "@/assets/dog_sprites/walk_left/walk_left_02.png";
+import walkLeft3 from "@/assets/dog_sprites/walk_left/walk_left_03.png";
 
 // Run
 import runRight0 from "@/assets/dog_sprites/run_right/run_right_00.png";
@@ -22,7 +28,8 @@ import sleep0 from "@/assets/dog_sprites/sleep/sleep_00.png";
 import sleep1 from "@/assets/dog_sprites/sleep/sleep_01.png";
 
 const SIT_IDLE_FRAMES = [sitIdle0, sitIdle1, sitIdle2];
-const WALK_FRAMES = [walkRight0, walkRight1, walkRight2, walkRight3];
+const WALK_RIGHT_FRAMES = [walkRight0, walkRight1, walkRight2, walkRight3];
+const WALK_LEFT_FRAMES = [walkLeft0, walkLeft1, walkLeft2, walkLeft3];
 const RUN_FRAMES = [runRight0, runRight1, runRight2];
 const SLEEP_FRAMES = [sleep0, sleep1];
 
@@ -54,13 +61,14 @@ const STOP_THRESHOLD = 30;   // px — close enough to stop
 const THRESHOLD_HYSTERESIS = 30; // px — buffer to avoid state flicker at boundaries
 const SLEEP_AFTER_MS = 12000;
 const WANDER_PAUSE = [2000, 4000]; // idle pause range between wanders
-const SPAWN_WALK_MS = 2200;
+const SPAWN_RUN_MS = 2600;
 
 const clampToViewport = (value: number) =>
   Math.max(0, Math.min(window.innerWidth - DOG_SIZE, value));
 
-const getSpawnX = () => clampToViewport(24);
-const getInitialTargetX = () => clampToViewport(window.innerWidth * 0.72);
+// Spawn just off the right edge of the screen so Mikey runs in.
+const getSpawnX = () => window.innerWidth + DOG_SIZE;
+const getInitialTargetX = () => clampToViewport(window.innerWidth * 0.28);
 
 // 16x16 pixel bone cursor as a data URI
 const BONE_CURSOR = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23fff%7D%3C/style%3E%3Crect x='2' y='6' width='12' height='4'/%3E%3Crect x='0' y='4' width='4' height='2'/%3E%3Crect x='0' y='10' width='4' height='2'/%3E%3Crect x='12' y='4' width='4' height='2'/%3E%3Crect x='12' y='10' width='4' height='2'/%3E%3C/svg%3E") 8 8, auto`;
@@ -71,8 +79,10 @@ interface MikeyPetProps {
 
 const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const [x, setX] = useState(getSpawnX);
-  const [facingRight, setFacingRight] = useState(true);
-  const [dogState, setDogState] = useState<DogState>("walk");
+  // Mikey enters from the right, so he starts facing left.
+  // (facingRight default is overridden here.)
+  const [facingRight, setFacingRight] = useState(false);
+  const [dogState, setDogState] = useState<DogState>("run");
   const [factIndex, setFactIndex] = useState(0);
   const [showBubble, setShowBubble] = useState(true);
   const [showDismissPrompt, setShowDismissPrompt] = useState(false);
@@ -85,7 +95,8 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   useEffect(() => {
     const all = [
       ...SIT_IDLE_FRAMES,
-      ...WALK_FRAMES,
+      ...WALK_RIGHT_FRAMES,
+      ...WALK_LEFT_FRAMES,
       ...RUN_FRAMES,
       ...SLEEP_FRAMES,
     ];
@@ -122,12 +133,12 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
   const lastInteraction = useRef(Date.now());
   const idleTimer = useRef<ReturnType<typeof setTimeout>>();
   const frameRef = useRef<number>();
-  const stateRef = useRef<DogState>("walk");
+  const stateRef = useRef<DogState>("run");
 
   // Pick the right frames for the current state and direction
   const frames =
     dogState === "run" ? RUN_FRAMES :
-    dogState === "walk" ? WALK_FRAMES :
+    dogState === "walk" ? (facingRight ? WALK_RIGHT_FRAMES : WALK_LEFT_FRAMES) :
     dogState === "sleep" ? SLEEP_FRAMES :
     SIT_IDLE_FRAMES;
 
@@ -202,10 +213,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       const dy = mouseY.current - dogY;
       const distToMouse = Math.sqrt(dx * dx + dy * dy);
       const now = Date.now();
-      const isSpawnWalking = now - spawnStartedAt.current < SPAWN_WALK_MS;
+      const isSpawnRunning = now - spawnStartedAt.current < SPAWN_RUN_MS;
 
       // Sleep check
-      if (!isSpawnWalking && now - lastInteraction.current > SLEEP_AFTER_MS && stateRef.current !== "sleep") {
+      if (!isSpawnRunning && now - lastInteraction.current > SLEEP_AFTER_MS && stateRef.current !== "sleep") {
         stateRef.current = "sleep";
         setDogState("sleep");
         if (idleTimer.current) {
@@ -244,10 +255,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
 
       const mouseEngaged = hasMouseMoved.current;
 
-      if (isSpawnWalking) {
+      if (isSpawnRunning) {
         target = targetX.current;
-        speed = WALK_SPEED;
-        newState = "walk";
+        speed = RUN_SPEED;
+        newState = "run";
       } else if (mouseEngaged && distToMouse < stopBound) {
         // Close enough — sit idle
         target = currentX;
@@ -281,7 +292,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       // moving mouse target — that causes rapid walk/idle oscillation at 60fps
       // and resets the sprite animation before frames can advance.
       const isChasing = mouseEngaged && distToMouse < CHASE_THRESHOLD;
-      const shouldIdle = !isSpawnWalking && (speed === 0 || (!isChasing && absDiff < 2));
+      const shouldIdle = !isSpawnRunning && (speed === 0 || (!isChasing && absDiff < 2));
 
       if (shouldIdle) {
         if (stateRef.current !== "idle") {
@@ -395,8 +406,9 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
           style={{
             imageRendering: "pixelated",
             objectFit: "contain",
-            transform: facingRight ? "scaleX(1)" : "scaleX(-1)",
-            opacity: assetsReady ? 1 : 0,
+            transform:
+              dogState === "walk" || facingRight ? "scaleX(1)" : "scaleX(-1)",
+            opacity: 1,
           }}
           draggable={false}
         />
