@@ -391,11 +391,12 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
         <img
           src={frameSrc}
           alt="Mikey the dog"
-          className="w-full h-full opacity-100"
+          className="w-full h-full transition-opacity duration-200"
           style={{
             imageRendering: "pixelated",
             objectFit: "contain",
             transform: facingRight ? "scaleX(1)" : "scaleX(-1)",
+            opacity: assetsReady ? 1 : 0,
           }}
           draggable={false}
         />
