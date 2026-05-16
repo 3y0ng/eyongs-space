@@ -1,47 +1,26 @@
-## Diagnosis
-
-Mikey worked in the claude-code preview because the local preview likely had the sprite PNGs cached and served them with lower latency. In Chrome/Lovable preview, each animation frame is being swapped as a separate `<img src>`. The browser network log shows repeated image requests for dog frames, many ending in `net::ERR_ABORTED`, followed by successful retries around ~660ms later.
-
-That explains both symptoms:
-
-- **Invisible for the first few seconds:** the current frame URL changes before the previous image finishes loading, so Chrome aborts the old request and the `<img>` has nothing decoded to paint yet.
-- **Stuck standing / floating:** movement is driven by one loop, but the visible sprite is blocked by image decoding/request churn, so the element moves while the frame appears frozen or blank.
-
-The asset files themselves are present and valid. The issue is not missing walk/run frames; it is the rendering strategy.
-
 ## Plan
 
-1. **Stop swapping separate PNG URLs during animation**
-   - Replace Mikey's `<img src={frameSrc}>` frame swapping with a CSS sprite-sheet renderer.
-   - Use one loaded image per animation state instead of repeated network requests per frame.
+1. **Make activation start off-screen right**
+   - Change Mikey’s initial position from the left side to just beyond the right edge.
+   - Set the first activation target to move inward from the right, so `mikey.exe` visibly begins with Mikey running onto the screen.
 
-2. **Generate reliable sprite strips from the existing assets**
-   - Create horizontal sprite-strip assets from the existing `walk_right`, `walk_left`, `run_right`, `run_right_2`, `sit_idle`, and `sleep` PNG frames.
-   - Normalize each strip to stable frame dimensions using the existing `sprites.json` max frame data so the dog does not jump between frames.
+2. **Use run animation during startup**
+   - Replace the current startup “walk” phase with a startup “run” phase.
+   - Keep Mikey in `run` state until he reaches the first on-screen target, then allow normal wander/chase behavior.
 
-3. **Update MikeyPet to use sprite metadata**
-   - Select the correct strip by `dogState` and direction.
-   - Animate with `background-position` or a deterministic frame index, while keeping movement independent.
-   - Prefer actual `walk_left` frames instead of flipping right-facing frames when moving left.
+3. **Remove the delayed invisible dog behavior**
+   - Stop rendering the label/speech bubble before the dog sprite is ready.
+   - Either preload before showing the whole pet container or keep a visible first frame while decoding; the goal is no floating label/bubble without Mikey.
 
-4. **Preload Mikey assets before showing the pet**
-   - During the bone-rain activation overlay, preload the sprite strips.
-   - Only mount/show Mikey after the required strips are decoded, with a short fallback timeout so activation never hangs.
+4. **Use real directional animation frames**
+   - Import and use `walk_left` frames for left movement instead of flipping right-facing walk frames.
+   - Keep `run_right` for right movement and use a stable left-facing run fallback only when needed.
+   - Ensure `dogState === "walk"` maps to walk frame arrays and `dogState === "run"` maps to run frame arrays, never a still pose.
 
-5. **Simplify the animation hook**
-   - Convert `useSpriteAnimation` from URL swapping to returning a numeric frame index, or add a new hook for frame indices.
-   - Keep hooks unconditionally called to avoid the previous React hook-order error.
+5. **Eliminate per-frame image request churn properly**
+   - Replace `<img src={frameSrc}>` swapping with a CSS sprite-frame renderer or a pre-decoded frame renderer that never goes blank between frames.
+   - Use a numeric frame index from the animation hook instead of repeatedly changing the image `src` mid-decode.
 
-6. **Verify in Chrome/Lovable preview**
-   - Activate Mikey with the Konami code.
-   - Confirm he is visible immediately after the activation overlay.
-   - Confirm walking/running use multiple frames while moving, with no floating single-frame pose.
-   - Check network requests no longer show continuous aborted per-frame dog image loads.
-
-## Files likely touched
-
-- `src/components/MikeyPet.tsx`
-- `src/hooks/useSpriteAnimation.ts` or a new frame-index hook
-- Generated sprite-strip assets under `src/assets/dog_sprites/`
-
-This keeps the existing behavior and assets, but makes the browser rendering robust in the Lovable iframe and normal Chrome.
+6. **Validate the behavior**
+   - Activate Mikey with the Konami flow in the preview.
+   - Confirm he runs in from the right immediately, dog/label/bubble appear together, and walk/run states visibly cycle through multiple frames rather than floating as a still.
