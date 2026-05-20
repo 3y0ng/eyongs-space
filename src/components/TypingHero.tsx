@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-// ASCII art name — compact block style
 const ASCII_NAME = [
   "███████╗██╗   ██╗ ██████╗ ███╗   ██╗ ██████╗ ",
   "██╔════╝╚██╗ ██╔╝██╔═══██╗████╗  ██║██╔════╝ ",
@@ -15,41 +14,40 @@ const lines = [
   { indent: false, text: '{' },
   { indent: true, parts: [
     { text: 'role', cls: 'text-terminal-amber' },
-    { text: ': ', cls: 'text-muted-foreground' },
-    { text: '"student & builder"', cls: 'text-foreground' },
-    { text: ',', cls: 'text-muted-foreground' },
+    { text: ': ', cls: 'text-zinc-500' },
+    { text: '"student & builder"', cls: 'text-zinc-200' },
+    { text: ',', cls: 'text-zinc-500' },
   ]},
   { indent: true, parts: [
     { text: 'building', cls: 'text-terminal-amber' },
-    { text: ': [', cls: 'text-muted-foreground' },
-    { text: '"pyreel.ai"', cls: 'text-foreground' },
-    { text: ', ', cls: 'text-muted-foreground' },
-    { text: '"curilo.ai"', cls: 'text-foreground' },
-    { text: '],', cls: 'text-muted-foreground' },
+    { text: ': [', cls: 'text-zinc-500' },
+    { text: '"pyreel.ai"', cls: 'text-zinc-200' },
+    { text: ', ', cls: 'text-zinc-500' },
+    { text: '"curilo.ai"', cls: 'text-zinc-200' },
+    { text: '],', cls: 'text-zinc-500' },
   ]},
   { indent: true, parts: [
     { text: 'previously', cls: 'text-terminal-amber' },
-    { text: ': ', cls: 'text-muted-foreground' },
-    { text: '"tutoring @ 4 locations, property @ 18"', cls: 'text-foreground' },
-    { text: ',', cls: 'text-muted-foreground' },
+    { text: ': ', cls: 'text-zinc-500' },
+    { text: '"tutoring @ 4 locations, property @ 18"', cls: 'text-zinc-200' },
+    { text: ',', cls: 'text-zinc-500' },
   ]},
   { indent: true, parts: [
     { text: 'north_star', cls: 'text-terminal-amber' },
-    { text: ': ', cls: 'text-muted-foreground' },
-    { text: '"build cool things"', cls: 'text-foreground' },
+    { text: ': ', cls: 'text-zinc-500' },
+    { text: '"build cool things"', cls: 'text-zinc-200' },
   ]},
   { indent: false, text: '}' },
 ];
 
-// Flatten all characters with their styling
 function buildCharStream() {
   const chars: { char: string; cls: string; lineIdx: number }[] = [];
   lines.forEach((line, lineIdx) => {
     if (lineIdx > 0) chars.push({ char: '\n', cls: '', lineIdx });
     if ('text' in line && !('parts' in line)) {
-      const cls = 'text-muted-foreground';
+      const cls = 'text-zinc-500';
       for (const c of line.text) {
-        chars.push({ char: c, cls: lineIdx === 0 ? '' : cls, lineIdx });
+        chars.push({ char: c, cls: lineIdx === 0 ? 'text-teal' : cls, lineIdx });
       }
     } else if ('parts' in line) {
       if (line.indent) {
@@ -74,7 +72,6 @@ const TypingHero = () => {
   const done = asciiDone && visibleCount >= charStream.length;
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Phase 1: type ASCII art fast
   useEffect(() => {
     const charsPerTick = 4;
     intervalRef.current = setInterval(() => {
@@ -91,7 +88,6 @@ const TypingHero = () => {
     };
   }, []);
 
-  // Phase 2: type CLI block after ASCII is done
   useEffect(() => {
     if (!asciiDone) return;
     const timeout = setTimeout(() => {
@@ -111,7 +107,6 @@ const TypingHero = () => {
     };
   }, [asciiDone]);
 
-  // Build rendered spans for CLI
   const rendered: React.ReactNode[] = [];
   let currentCls = '';
   let buffer = '';
@@ -134,21 +129,24 @@ const TypingHero = () => {
   flush('end');
 
   return (
-    <div className="rounded-lg border border-border bg-card p-6 font-mono text-sm mb-6 min-h-[200px]">
-      {/* ASCII art name */}
-      <pre className="text-terminal-green text-[0.55rem] sm:text-xs leading-tight mb-4 whitespace-pre overflow-x-auto">
+    <div className="glass glass-hover relative overflow-hidden p-8 font-mono text-sm min-h-[280px] shadow-[0_0_40px_-20px_hsl(var(--teal)/0.2)]">
+      <div className="absolute -right-16 -top-16 w-64 h-64 bg-[hsl(var(--teal))]/5 blur-[100px] pointer-events-none" />
+      <div className="absolute top-4 right-4 opacity-20 pointer-events-none">
+        <div className="w-10 h-10 border-t-2 border-r-2 border-teal" />
+      </div>
+
+      <pre className="text-teal text-[0.55rem] sm:text-xs leading-tight mb-6 whitespace-pre overflow-x-auto select-none">
         {ASCII_NAME.slice(0, asciiIdx)}
         {!asciiDone && <span className="animate-blink">▌</span>}
       </pre>
 
-      {/* CLI block */}
       {asciiDone && (
         <pre className="whitespace-pre-wrap">
           {rendered}
           {!done && <span className="animate-blink ml-0.5">▌</span>}
         </pre>
       )}
-      {done && <span className="animate-blink ml-0.5">▌</span>}
+      {done && <span className="animate-blink ml-0.5 text-teal">▌</span>}
     </div>
   );
 };
