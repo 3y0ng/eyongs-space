@@ -330,12 +330,16 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
       frameRef.current = requestAnimationFrame(animate);
     };
 
+    if (!assetsReady) return;
+    // Reset spawn timer so Mikey runs in *after* assets are decoded.
+    spawnStartedAt.current = Date.now();
+    lastInteraction.current = Date.now();
     frameRef.current = requestAnimationFrame(animate);
     return () => {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
       if (idleTimer.current) clearTimeout(idleTimer.current);
     };
-  }, [pickWanderTarget]);
+  }, [pickWanderTarget, assetsReady]);
 
 
   const handleClick = () => {
@@ -347,6 +351,8 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
     }
     setShowDismissPrompt((v) => !v);
   };
+
+  if (!assetsReady) return null;
 
   return (
     <div
