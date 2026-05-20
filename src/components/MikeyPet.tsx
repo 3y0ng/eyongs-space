@@ -352,6 +352,8 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
     setShowDismissPrompt((v) => !v);
   };
 
+  if (!assetsReady) return null;
+
   return (
     <div
       className="fixed bottom-0 left-0 z-[9998] w-full pointer-events-none"
