@@ -25,7 +25,7 @@ export const projects: Project[] = [
     description: "A dual-platform agentic orchestration layer for marketing. Built using FastAPI and Celery, it automates end-to-end campaign execution from research to video asset generation.",
     status: "Active",
     color: "hsl(var(--primary))",
-    link: "https://pyreel.ai",
+    link: "https://pyreel.com",
     image: pyreelScreenshot,
   },
   {
