@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,13 +6,13 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
+    --background: 0 0% 7%;
     --foreground: 0 0% 92%;
 
-    --card: 240 5% 8%;
+    --card: 0 0% 10%;
     --card-foreground: 0 0% 92%;
 
-    --popover: 240 5% 8%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 92%;
 
     --primary: 0 0% 92%;
@@ -24,19 +24,19 @@
     --muted: 0 0% 14%;
     --muted-foreground: 0 0% 55%;
 
-    --accent: 172 66% 50%;
-    --accent-foreground: 0 0% 7%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 92%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 172 66% 50%;
+    --ring: 0 0% 92%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 4%;
+    --sidebar-background: 0 0% 9%;
     --sidebar-foreground: 0 0% 74%;
     --sidebar-primary: 0 0% 90%;
     --sidebar-primary-foreground: 0 0% 9%;
@@ -45,10 +45,8 @@
     --sidebar-border: 0 0% 18%;
     --sidebar-ring: 0 0% 40%;
 
-    /* Teal accent replaces previous green; alias terminal-green to teal so legacy usages keep working */
-    --teal: 172 66% 50%;
-    --terminal-green: 172 66% 50%;
-    --terminal-amber: 38 92% 60%;
+    --terminal-green: 142 70% 45%;
+    --terminal-amber: 38 92% 50%;
   }
 }
 
@@ -59,42 +57,16 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 20% 0%, hsl(var(--teal) / 0.06), transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, hsl(var(--teal) / 0.04), transparent 60%);
-    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: -0.01em;
-  }
-}
-
-@layer components {
-  .glass {
-    @apply rounded-2xl border border-white/5 bg-zinc-900/30 backdrop-blur-xl;
-  }
-  .glass-hover {
-    @apply transition-colors duration-300 hover:border-[hsl(var(--teal))]/30;
-  }
-  .glass-soft {
-    @apply rounded-2xl border border-white/5 bg-zinc-900/20 backdrop-blur-md;
+    font-family: 'Playfair Display', serif;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Space Grotesk', sans-serif;
-  }
-  .text-teal {
-    color: hsl(var(--teal));
-  }
-  .bg-teal {
-    background-color: hsl(var(--teal));
-  }
-  .border-teal {
-    border-color: hsl(var(--teal));
+    font-family: 'Playfair Display', serif;
   }
 }
 
@@ -108,9 +80,17 @@
 }
 
 @keyframes bone-fall {
-  0% { transform: translateY(0); opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
 }
 
 /* Hide default cursor on desktop when custom cursor is active */
@@ -119,6 +99,7 @@
     cursor: none !important;
   }
 
+  /* Pixel bone cursor when dog is chasing */
   .bone-cursor,
   .bone-cursor * {
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23fff%7D%3C/style%3E%3Crect x='2' y='6' width='12' height='4'/%3E%3Crect x='0' y='4' width='4' height='2'/%3E%3Crect x='0' y='10' width='4' height='2'/%3E%3Crect x='12' y='4' width='4' height='2'/%3E%3Crect x='12' y='10' width='4' height='2'/%3E%3C/svg%3E") 8 8, auto !important;

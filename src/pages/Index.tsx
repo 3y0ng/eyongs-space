@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PageTransition from "@/components/PageTransition";
 import ProjectCard from "@/components/ProjectCard";
@@ -6,97 +7,80 @@ import { projects } from "@/data/projects";
 import { essays } from "@/data/essays";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
+const useParallax = (speed = 0.02) => {
+  const ref = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect();
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      el.style.transform = `translateY(${center * speed}px)`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [speed]);
+  return ref;
+};
+
 const Index = () => {
-  const gridRef = useScrollReveal<HTMLDivElement>();
+  const projectsRef = useScrollReveal<HTMLElement>();
+  const essaysRef = useScrollReveal<HTMLElement>({ delay: 100 });
+  const projectsHeaderRef = useParallax(0.02);
+  const essaysHeaderRef = useParallax(0.02);
 
   return (
     <PageTransition>
-      <div className="max-w-6xl mx-auto px-4 md:px-6 pt-20 md:pt-24 pb-12">
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-12 gap-4">
-          {/* Hero terminal */}
-          <div className="md:col-span-8">
-            <TypingHero />
-          </div>
+      <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
+        {/* CLI Hero */}
+        <section className="mb-24">
+          <TypingHero />
+        </section>
 
-          {/* Status sidebar */}
-          <div className="md:col-span-4 glass p-6 flex flex-col justify-between">
-            <div>
-              <h3 className="text-zinc-500 uppercase tracking-[0.2em] text-[10px] font-mono font-bold mb-5">
-                Status
-              </h3>
-              <div className="space-y-5">
-                <div>
-                  <span className="block text-teal text-3xl font-display font-semibold tracking-tight">
-                    0 to 1
-                  </span>
-                  <span className="text-[11px] text-zinc-500 font-mono uppercase tracking-wider">
-                    Execution Mode
-                  </span>
+        {/* Projects */}
+        <section ref={projectsRef} className="mb-24">
+          <div className="flex items-baseline justify-between mb-6">
+            <h2 ref={projectsHeaderRef} className="font-mono text-sm text-terminal-green">// projects</h2>
+            <Link to="/projects" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono">
+              view all →
+            </Link>
+          </div>
+          <div>
+             {projects.slice(0, 3).map((project) => (
+              <ProjectCard key={project.id} project={project} showPreview={false} />
+            ))}
+          </div>
+        </section>
+
+        {/* Essays */}
+        <section ref={essaysRef}>
+          <div className="flex items-baseline justify-between mb-6">
+            <h2 ref={essaysHeaderRef} className="font-mono text-sm text-terminal-green">// essays</h2>
+            <Link to="/essays" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono">
+              read all →
+            </Link>
+          </div>
+          <div>
+            {essays.map((essay) => (
+              <Link
+                key={essay.id}
+                to={`/essays/${essay.id}`}
+                className="group block py-5 border-b border-border last:border-0"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-medium group-hover:underline underline-offset-4">
+                      {essay.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-1">{essay.excerpt}</p>
+                  </div>
+                  <span className="text-xs text-muted-foreground mt-1 shrink-0">{essay.date}</span>
                 </div>
-                <div className="h-px w-full bg-white/5" />
-                <div className="text-[11px] font-mono space-y-2 text-zinc-500">
-                  <div className="flex justify-between">
-                    <span className="uppercase tracking-wider">Building</span>
-                    <span className="text-zinc-300">{projects.filter(p => p.status === "Active").length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="uppercase tracking-wider">Shipped</span>
-                    <span className="text-zinc-300">{projects.filter(p => p.status === "Shipped").length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="uppercase tracking-wider">Location</span>
-                    <span className="text-zinc-300">AU</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-6 pt-5 border-t border-white/5 flex items-center gap-2 text-[11px] font-mono text-zinc-500">
-              <span className="w-1.5 h-1.5 rounded-full bg-teal animate-pulse" />
-              <span>online</span>
-            </div>
-          </div>
-
-          {/* Projects */}
-          <div className="md:col-span-7 glass p-8">
-            <div className="flex justify-between items-baseline mb-6">
-              <h2 className="font-display text-xl text-zinc-100 tracking-tight">
-                <span className="text-teal font-mono text-sm mr-1">//</span> projects
-              </h2>
-              <Link to="/projects" className="text-[11px] font-mono text-zinc-500 hover:text-teal uppercase tracking-widest transition-colors">
-                view all →
               </Link>
-            </div>
-            <div>
-              {projects.slice(0, 3).map((project) => (
-                <ProjectCard key={project.id} project={project} showPreview={false} />
-              ))}
-            </div>
+            ))}
           </div>
-
-          {/* Essays */}
-          <div className="md:col-span-5 glass p-8">
-            <div className="flex justify-between items-baseline mb-6">
-              <h2 className="font-display text-xl text-zinc-100 tracking-tight">
-                <span className="text-teal font-mono text-sm mr-1">//</span> essays
-              </h2>
-              <Link to="/essays" className="text-[11px] font-mono text-zinc-500 hover:text-teal uppercase tracking-widest transition-colors">
-                read all →
-              </Link>
-            </div>
-            <div className="space-y-5">
-              {essays.map((essay) => (
-                <Link key={essay.id} to={`/essays/${essay.id}`} className="group block">
-                  <span className="text-[10px] font-mono text-zinc-600 block mb-1 uppercase tracking-widest">
-                    {essay.date}
-                  </span>
-                  <h4 className="text-sm text-zinc-300 group-hover:text-teal transition-colors leading-snug">
-                    {essay.title}
-                  </h4>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
     </PageTransition>
   );

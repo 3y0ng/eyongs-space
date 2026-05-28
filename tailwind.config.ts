@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['DM Sans', 'Inter', 'system-ui', 'sans-serif'],
-        display: ['Space Grotesk', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
@@ -55,10 +55,6 @@ export default {
         terminal: {
           green: "hsl(var(--terminal-green))",
           amber: "hsl(var(--terminal-amber))",
-        },
-        teal: {
-          DEFAULT: "hsl(var(--teal))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
