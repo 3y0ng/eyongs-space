@@ -259,8 +259,10 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
         target = targetX.current;
         speed = RUN_SPEED;
         newState = "run";
-      } else if (mouseEngaged && distToMouse < stopBound) {
-        // Close enough — sit idle
+      } else if (mouseEngaged && distToMouse < CHASE_THRESHOLD && Math.abs(dx) < stopBound) {
+        // Directly below the mouse — sit idle. Horizontal check only: the
+        // cursor may be high above the dog, but he can't move vertically,
+        // so once his x lines up there's nowhere left to run.
         target = currentX;
         speed = 0;
         newState = "idle";
