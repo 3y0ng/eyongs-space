@@ -1,5 +1,6 @@
 import PageTransition from "@/components/PageTransition";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import eyongPhoto from "@/assets/eyong-shanghai.jpg";
 
 const About = () => {
   const bioRef = useScrollReveal<HTMLDivElement>();
@@ -13,13 +14,25 @@ const About = () => {
 
         <div ref={bioRef} className="mb-16">
           <h2 className="font-display text-2xl md:text-3xl mb-6">Hey, I'm E-Yong.</h2>
-          <div className="space-y-4 text-foreground/80 leading-[1.8]">
-            <p>
-              I'm a student and builder based in Australia. I started a tutoring business from my living room as a college freshman to support my family. It grew to four brick-and-mortar locations and $500k ARR within three years.
-            </p>
-            <p>
-              I've since passed it on to my younger brother and moved into tech. Now I'm building products that draw on pain points I encountered first-hand. Pyreel.com for helping founders nail distribution through agentic marketing orchestration, and Curilo.ai, an AI writing tutor for K-12 students.
-            </p>
+          <div className="md:flex md:items-start md:gap-8">
+            <div className="space-y-4 text-foreground/80 leading-[1.8]">
+              <p>
+                I'm a student and builder based in Australia. I started a tutoring business from my living room as a college freshman to support my family. It grew to four brick-and-mortar locations and $500k ARR within three years.
+              </p>
+              <p>
+                I've since passed it on to my younger brother and moved into tech. Now I'm building products that draw on pain points I encountered first-hand. Pyreel.com for helping founders nail distribution through agentic marketing orchestration, and Curilo.ai, an AI writing tutor for K-12 students.
+              </p>
+            </div>
+            <figure className="mt-8 md:mt-0 shrink-0 w-full max-w-xs mx-auto md:w-56 md:mx-0">
+              <img
+                src={eyongPhoto}
+                alt="E-Yong sitting on the Bund in Shanghai at night"
+                className="w-full rounded-lg border border-border"
+              />
+              <figcaption className="mt-2 font-mono text-[11px] text-muted-foreground text-center">
+                // the bund, shanghai
+              </figcaption>
+            </figure>
           </div>
         </div>
 
