@@ -21,7 +21,7 @@ const About = () => {
                 I'm a student and builder based in Australia. I started a tutoring business from my living room as a college freshman to support my family. It grew to four brick-and-mortar locations and $500k ARR within three years.
               </p>
               <p>
-                I've since passed it on to my younger brother and moved into tech. Now I'm building products that draw on pain points I encountered first-hand. Pyreel.com for helping founders nail distribution through agentic marketing orchestration, and Curilo.ai, an AI writing tutor for K-12 students.
+                I've since passed it on to my younger brother and moved into tech. Now I'm building products that draw on pain points I encountered first-hand. Pyreel.com, a reinforcement learning and analytics engine that teaches paid marketing spend to optimize itself, and Curilo.ai, an AI writing tutor for K-12 students.
               </p>
             </div>
             <figure className="mt-8 md:mt-0 shrink-0 w-full max-w-xs mx-auto md:w-56 md:mx-0">
