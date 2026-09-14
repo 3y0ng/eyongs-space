@@ -1,4 +1,5 @@
 import PageTransition from "@/components/PageTransition";
+import MacWindow from "@/components/MacWindow";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import eyongPhoto from "@/assets/eyong-shanghai.jpg";
 
@@ -10,7 +11,7 @@ const About = () => {
   return (
     <PageTransition>
       <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
-        <h1 className="font-mono text-sm text-terminal-green mb-10">// about</h1>
+        <h1 className="font-mono text-sm text-terminal-accent mb-10">// about</h1>
 
         <div ref={bioRef} className="mb-16">
           <h2 className="font-display text-2xl md:text-3xl mb-6">Hey, I'm E-Yong.</h2>
@@ -24,11 +25,13 @@ const About = () => {
               </p>
             </div>
             <figure className="mt-8 md:mt-0 shrink-0 w-full max-w-xs mx-auto md:w-56 md:mx-0">
-              <img
-                src={eyongPhoto}
-                alt="E-Yong sitting on the Bund in Shanghai at night"
-                className="w-full rounded-lg border border-border"
-              />
+              <MacWindow title="the-bund.jpg" zoomClassName="md:-mx-6 lg:-mx-10">
+                <img
+                  src={eyongPhoto}
+                  alt="E-Yong sitting on the Bund in Shanghai at night"
+                  className="w-full"
+                />
+              </MacWindow>
               <figcaption className="mt-2 font-mono text-[11px] text-muted-foreground text-center">
                 // the bund, shanghai
               </figcaption>
@@ -36,31 +39,35 @@ const About = () => {
           </div>
         </div>
 
-        <div ref={statsRef} className="rounded-lg border border-border bg-card p-6 font-mono text-sm mb-16">
+        <div ref={statsRef} className="mb-16">
+          <MacWindow
+            title="~/eyong — stats.sh"
+            bodyClassName="p-6 font-mono text-sm"
+          >
           <div className="text-muted-foreground mb-2">
-            <span className="text-terminal-green">{">"}</span> eyong.stats()
+            <span className="text-terminal-accent">{">"}</span> eyong.stats()
           </div>
           <div className="text-muted-foreground">{"{"}</div>
           <div className="pl-4">
-            <span className="text-terminal-amber">location</span>
+            <span className="text-terminal-key">location</span>
             <span className="text-muted-foreground">: </span>
             <span className="text-foreground">"Australia"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
-            <span className="text-terminal-amber">currently_obsessed_with</span>
+            <span className="text-terminal-key">currently_obsessed_with</span>
             <span className="text-muted-foreground">: </span>
             <span className="text-foreground">"building cool stuff + my dog"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
-            <span className="text-terminal-amber">hot_take</span>
+            <span className="text-terminal-key">hot_take</span>
             <span className="text-muted-foreground">: </span>
             <span className="text-foreground">"turns out pmf is still the only real moat"</span>
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
-            <span className="text-terminal-amber">stack</span>
+            <span className="text-terminal-key">stack</span>
             <span className="text-muted-foreground">: [</span>
             <span className="text-foreground">"TypeScript"</span>
             <span className="text-muted-foreground">, </span>
@@ -71,11 +78,12 @@ const About = () => {
             <span className="text-muted-foreground">,</span>
           </div>
           <div className="pl-4">
-            <span className="text-terminal-amber">debug_strategy</span>
+            <span className="text-terminal-key">debug_strategy</span>
             <span className="text-muted-foreground">: </span>
             <span className="text-foreground">"console.log until it confesses"</span>
           </div>
           <div className="text-muted-foreground">{"}"}</div>
+          </MacWindow>
         </div>
 
         <div ref={linksRef} className="flex gap-5 text-sm">

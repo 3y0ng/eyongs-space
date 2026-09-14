@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import MacWindow from "@/components/MacWindow";
 
 // ASCII art name — compact block style
 const ASCII_NAME = [
@@ -14,27 +15,27 @@ const lines = [
   { indent: false, text: '> eyong.status()' },
   { indent: false, text: '{' },
   { indent: true, parts: [
-    { text: 'role', cls: 'text-terminal-amber' },
+    { text: 'role', cls: 'text-terminal-key' },
     { text: ': ', cls: 'text-muted-foreground' },
     { text: '"student & builder"', cls: 'text-foreground' },
     { text: ',', cls: 'text-muted-foreground' },
   ]},
   { indent: true, parts: [
-    { text: 'building', cls: 'text-terminal-amber' },
+    { text: 'building', cls: 'text-terminal-key' },
     { text: ': [', cls: 'text-muted-foreground' },
-    { text: '"pyreel.ai"', cls: 'text-foreground' },
+    { text: '"pyreel.com"', cls: 'text-foreground' },
     { text: ', ', cls: 'text-muted-foreground' },
     { text: '"curilo.ai"', cls: 'text-foreground' },
     { text: '],', cls: 'text-muted-foreground' },
   ]},
   { indent: true, parts: [
-    { text: 'previously', cls: 'text-terminal-amber' },
+    { text: 'previously', cls: 'text-terminal-key' },
     { text: ': ', cls: 'text-muted-foreground' },
     { text: '"tutoring @ 4 locations, property @ 18"', cls: 'text-foreground' },
     { text: ',', cls: 'text-muted-foreground' },
   ]},
   { indent: true, parts: [
-    { text: 'north_star', cls: 'text-terminal-amber' },
+    { text: 'north_star', cls: 'text-terminal-key' },
     { text: ': ', cls: 'text-muted-foreground' },
     { text: '"build cool things"', cls: 'text-foreground' },
   ]},
@@ -134,9 +135,13 @@ const TypingHero = () => {
   flush('end');
 
   return (
-    <div className="rounded-lg border border-border bg-card p-6 font-mono text-sm mb-6 min-h-[200px]">
+    <MacWindow
+      title="~/eyong — status.sh"
+      className="mb-6"
+      bodyClassName="p-6 font-mono text-sm min-h-[200px]"
+    >
       {/* ASCII art name */}
-      <pre className="text-terminal-green text-[0.55rem] sm:text-xs leading-tight mb-4 whitespace-pre overflow-x-auto">
+      <pre className="text-terminal-accent text-[0.55rem] sm:text-xs leading-tight mb-4 whitespace-pre overflow-x-auto">
         {ASCII_NAME.slice(0, asciiIdx)}
         {!asciiDone && <span className="animate-blink">▌</span>}
       </pre>
@@ -149,7 +154,7 @@ const TypingHero = () => {
         </pre>
       )}
       {done && <span className="animate-blink ml-0.5">▌</span>}
-    </div>
+    </MacWindow>
   );
 };
 

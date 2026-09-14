@@ -6,47 +6,58 @@
 
 @layer base {
   :root {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 92%;
+    /* Slate & Teal — slate ground biased blue-green so the teal reads native,
+       with a warm orange opposite it for keys. */
+    --background: 205 20% 8%;
+    --foreground: 200 14% 93%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 92%;
+    --card: 205 18% 11%;
+    --card-foreground: 200 14% 93%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 92%;
+    --popover: 205 18% 11%;
+    --popover-foreground: 200 14% 93%;
 
-    --primary: 0 0% 92%;
-    --primary-foreground: 0 0% 7%;
+    --primary: 200 14% 93%;
+    --primary-foreground: 205 20% 8%;
 
-    --secondary: 0 0% 14%;
-    --secondary-foreground: 0 0% 92%;
+    --secondary: 205 14% 15%;
+    --secondary-foreground: 200 14% 93%;
 
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 205 14% 15%;
+    --muted-foreground: 203 10% 58%;
 
-    --accent: 0 0% 14%;
-    --accent-foreground: 0 0% 92%;
+    --accent: 205 14% 15%;
+    --accent-foreground: 200 14% 93%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 358 70% 58%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 0 0% 92%;
+    --border: 205 13% 19%;
+    --input: 205 13% 19%;
+    --ring: 185.37 78.82% 50.00%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 0 0% 74%;
-    --sidebar-primary: 0 0% 90%;
-    --sidebar-primary-foreground: 0 0% 9%;
-    --sidebar-accent: 0 0% 14%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 0 0% 40%;
+    --sidebar-background: 205 20% 9%;
+    --sidebar-foreground: 203 12% 74%;
+    --sidebar-primary: 200 14% 90%;
+    --sidebar-primary-foreground: 205 20% 9%;
+    --sidebar-accent: 205 14% 15%;
+    --sidebar-accent-foreground: 200 14% 90%;
+    --sidebar-border: 205 13% 19%;
+    --sidebar-ring: 185.37 78.82% 50.00%;
 
-    --terminal-green: 142 70% 45%;
-    --terminal-amber: 38 92% 50%;
+    /* Accent slots. Named by role, not hue, so a future colorway is a value swap.
+       --terminal-accent : nav prompt, section headers, ASCII name, cursor, reading bar
+       --terminal-key    : object keys in the hero, "exploring" status */
+    --terminal-accent: 185.37 78.82% 50.00%;
+    --terminal-key: 21.62 94.15% 66.47%;
+
+    /* Window controls. Kept close to the real thing — traffic lights only read
+       as window controls when they are the colours everyone already knows. */
+    --win-close: 4 88% 63%;
+    --win-minimize: 41 92% 61%;
+    --win-zoom: 129 44% 52%;
   }
 }
 

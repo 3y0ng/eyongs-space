@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import type { Project } from "@/data/projects";
 
 const statusColor: Record<string, string> = {
-  Active: "text-terminal-green",
+  Active: "text-terminal-accent",
   Shipped: "text-muted-foreground",
-  Exploring: "text-terminal-amber",
+  Exploring: "text-terminal-key",
 };
 
 const ProjectCard = ({ project, showPreview = true }: { project: Project; showPreview?: boolean }) => {
@@ -18,7 +18,7 @@ const ProjectCard = ({ project, showPreview = true }: { project: Project; showPr
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
     el.style.transform = `translate(${x * 0.04}px, ${y * 0.06}px)`;
-    el.style.boxShadow = `0 0 20px -8px hsl(var(--terminal-green) / 0.15)`;
+    el.style.boxShadow = `0 0 20px -8px hsl(var(--terminal-accent) / 0.15)`;
   }, []);
 
   const handleMouseLeave = useCallback(() => {

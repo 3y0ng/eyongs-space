@@ -19,7 +19,7 @@ const NowPlaying = () => {
   }, []);
   return (
     <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground mt-6">
-      <span className="inline-block w-1.5 h-1.5 rounded-full bg-terminal-green animate-blink" />
+      <span className="inline-block w-1.5 h-1.5 rounded-full bg-terminal-accent animate-blink" />
       <span className="transition-opacity duration-300">{STATUS_MESSAGES[idx]}</span>
     </div>
   );
@@ -94,7 +94,7 @@ const Footer = () => {
         <NowPlaying />
 
         <p className="font-mono text-xs text-muted-foreground mt-6">
-          last commit: {new Date().toISOString().slice(0, 10)} · built with leftover claude-code credits
+          last commit: {new Date().toISOString().slice(0, 10)}
         </p>
       </div>
     </footer>

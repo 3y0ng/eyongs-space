@@ -53,8 +53,8 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         terminal: {
-          green: "hsl(var(--terminal-green))",
-          amber: "hsl(var(--terminal-amber))",
+          accent: "hsl(var(--terminal-accent))",
+          key: "hsl(var(--terminal-key))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

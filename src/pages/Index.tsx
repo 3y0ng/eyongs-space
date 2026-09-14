@@ -41,7 +41,7 @@ const Index = () => {
         {/* Projects */}
         <section ref={projectsRef} className="mb-24">
           <div className="flex items-baseline justify-between mb-6">
-            <h2 ref={projectsHeaderRef} className="font-mono text-sm text-terminal-green">// projects</h2>
+            <h2 ref={projectsHeaderRef} className="font-mono text-sm text-terminal-accent">// projects</h2>
             <Link to="/projects" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono">
               view all →
             </Link>
@@ -56,7 +56,7 @@ const Index = () => {
         {/* Essays */}
         <section ref={essaysRef}>
           <div className="flex items-baseline justify-between mb-6">
-            <h2 ref={essaysHeaderRef} className="font-mono text-sm text-terminal-green">// essays</h2>
+            <h2 ref={essaysHeaderRef} className="font-mono text-sm text-terminal-accent">// essays</h2>
             <Link to="/essays" className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono">
               read all →
             </Link>

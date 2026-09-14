@@ -45,7 +45,7 @@ const BoneRain = ({ onComplete }: BoneRainProps) => {
   return (
     <div className="fixed inset-0 z-[10001] pointer-events-none overflow-hidden bg-background/90">
       {/* Green tint overlay */}
-      <div className="absolute inset-0 bg-[hsl(var(--terminal-green)/0.05)]" />
+      <div className="absolute inset-0 bg-[hsl(var(--terminal-accent)/0.05)]" />
       
       {/* Falling bones */}
       {bones.map((bone) => (
@@ -65,7 +65,7 @@ const BoneRain = ({ onComplete }: BoneRainProps) => {
 
       {/* Center text */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="font-mono text-lg text-[hsl(var(--terminal-green))] animate-blink">
+        <div className="font-mono text-lg text-[hsl(var(--terminal-accent))] animate-blink">
           &gt; mikey.exe activated...
         </div>
       </div>
