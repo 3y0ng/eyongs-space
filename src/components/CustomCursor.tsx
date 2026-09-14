@@ -68,7 +68,7 @@ const CustomCursor = () => {
         style={{
           width: 4,
           height: 4,
-          backgroundColor: "hsl(var(--terminal-green))",
+          backgroundColor: "hsl(var(--terminal-accent))",
         }}
       />
       {/* Hollow ring that follows with lag and scales on hover */}
@@ -79,8 +79,8 @@ const CustomCursor = () => {
           width: hovering ? 40 : 28,
           height: hovering ? 40 : 28,
           borderColor: hovering
-            ? "hsl(var(--terminal-green) / 0.8)"
-            : "hsl(var(--terminal-green) / 0.4)",
+            ? "hsl(var(--terminal-accent) / 0.8)"
+            : "hsl(var(--terminal-accent) / 0.4)",
           borderWidth: hovering ? 2 : 1.5,
         }}
       />
