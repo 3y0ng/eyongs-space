@@ -1,7 +1,7 @@
 import givemapScreenshot from "@/assets/givemap-screenshot.png";
 import curiloScreenshot from "@/assets/curilo-screenshot.png";
 import leeEducationScreenshot from "@/assets/lee-education-screenshot.png";
-import pyreelScreenshot from "@/assets/pyreel-screenshot.png";
+import pyreelScreenshot from "@/assets/pyreel-screenshot.jpg";
 import grandpaSiteScreenshot from "@/assets/grandpa-site-screenshot.png";
 
 export type ProjectStatus = "Active" | "Shipped" | "Exploring";
@@ -21,8 +21,8 @@ export const projects: Project[] = [
   {
     id: "pyreel",
     title: "Pyreel",
-    tagline: "Agentic marketing orchestration",
-    description: "A dual-platform agentic orchestration layer for marketing. Built using FastAPI and Celery, it automates end-to-end campaign execution from research to video asset generation.",
+    tagline: "Reinforcement learning for paid media",
+    description: "A closed-loop optimization engine for paid marketing. Every impression, click, and conversion feeds a unified analytics layer, and a reinforcement learning policy reads those signals to reallocate spend across creatives, audiences, and placements — so every campaign becomes the training data for the next one.",
     status: "Active",
     color: "hsl(var(--primary))",
     link: "https://pyreel.com",
