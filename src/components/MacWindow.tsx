@@ -147,7 +147,7 @@ const MacWindow = ({
 
   if (closed) {
     return (
-      <div className={className}>
+      <div className={`dark ${className}`}>
         <button
           type="button"
           data-hoverable
@@ -173,7 +173,7 @@ const MacWindow = ({
   return (
     <div
       ref={frameRef}
-      className={`relative ${zoomed ? zoomClassName : ""} ${
+      className={`dark relative ${zoomed ? zoomClassName : ""} ${
         dragging
           ? "z-30"
           : "z-20 transition-[transform,margin] duration-300 ease-out motion-reduce:transition-none"

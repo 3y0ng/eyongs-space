@@ -54,6 +54,7 @@ export default {
         },
         terminal: {
           accent: "hsl(var(--terminal-accent))",
+          "accent-vivid": "hsl(var(--terminal-accent-vivid))",
           key: "hsl(var(--terminal-key))",
         },
         sidebar: {

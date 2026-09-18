@@ -101,7 +101,7 @@ const PixelDog = ({ onPeekClick, showHint }: PixelDogProps) => {
             right: 24 + DOG_SIZE + 8,
           }}
         >
-          <div className="whitespace-nowrap bg-card border border-border rounded px-2 py-1 text-[10px] font-mono text-muted-foreground">
+          <div className="dark whitespace-nowrap bg-card border border-border rounded px-2 py-1 text-[10px] font-mono text-muted-foreground">
             {bubble}
             {/* Arrow pointing right toward the dog */}
             <div className="absolute top-1/2 -translate-y-1/2 -right-[4px] w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[4px] border-l-border" />

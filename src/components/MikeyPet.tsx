@@ -376,7 +376,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
         {/* Speech bubble */}
         {dogState !== "sleep" && !showDismissPrompt && (
           <div
-            className={`absolute left-1/2 -translate-x-1/2 bottom-full mb-1 whitespace-nowrap bg-card border border-border rounded px-2 py-1 text-[10px] font-mono text-muted-foreground transition-opacity duration-300 ${
+            className={`dark absolute left-1/2 -translate-x-1/2 bottom-full mb-1 whitespace-nowrap bg-card border border-border rounded px-2 py-1 text-[10px] font-mono text-muted-foreground transition-opacity duration-300 ${
               showBubble ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -393,7 +393,7 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
 
         {/* Dismiss prompt */}
         {showDismissPrompt && dogState !== "sleep" && (
-          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 whitespace-nowrap bg-card border border-border rounded px-2 py-1.5 text-[10px] font-mono text-muted-foreground animate-fade-in z-10">
+          <div className="dark absolute left-1/2 -translate-x-1/2 bottom-full mb-1 whitespace-nowrap bg-card border border-border rounded px-2 py-1.5 text-[10px] font-mono text-muted-foreground animate-fade-in z-10">
             <button
               onClick={(e) => {
                 e.stopPropagation();
