@@ -5,10 +5,18 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* Slate & Teal — near-black ground biased blue-green so the teal reads
-       native, with a warm orange opposite it for keys. Surfaces step up from
-       the ground in small increments so layering still reads at this depth. */
+  /* Slate & Teal — near-black ground biased blue-green so the teal reads
+     native, with a warm orange opposite it for keys. Surfaces step up from
+     the ground in small increments so layering still reads at this depth.
+
+     This is the default: the page is dark unless the device explicitly asks
+     for light. `.dark` shares the declaration because the chrome — the nav,
+     the footer, every window frame — stays on this palette in both themes,
+     so in light mode those subtrees opt straight back out of the flip. */
+  :root,
+  .dark {
+    color-scheme: dark;
+
     --background: 205 20% 3%;
     --foreground: 200 14% 93%;
 
@@ -54,11 +62,72 @@
     --terminal-accent: 185.37 78.82% 50.00%;
     --terminal-key: 21.62 94.15% 66.47%;
 
+    /* The teal for marks that float over the whole page — the custom cursor
+       and the reading bar, which crosses the navbar. On a dark page that is
+       every other teal; on a light one it has to straddle both grounds. */
+    --terminal-accent-vivid: 185.37 78.82% 50.00%;
+
     /* Window controls. Kept close to the real thing — traffic lights only read
-       as window controls when they are the colours everyone already knows. */
+       as window controls when they are the colours everyone already knows.
+       They sit on a dark title bar in both themes, so they never restate. */
     --win-close: 4 88% 63%;
     --win-minimize: 41 92% 61%;
     --win-zoom: 129 44% 52%;
+  }
+
+  /* Paper & Teal — the same site on a white ground, for a device that asks
+     for light. Only the page flips: the chrome carries `.dark`, and the
+     :not() keeps this off any element that does, so the two grounds end up
+     side by side. The accents darken because they now have to hold 4.5:1
+     against white rather than against near-black. */
+  @media (prefers-color-scheme: light) {
+    :root:not(.dark) {
+      color-scheme: light;
+
+      --background: 0 0% 100%;
+      --foreground: 205 22% 11%;
+
+      --card: 0 0% 100%;
+      --card-foreground: 205 22% 11%;
+
+      --popover: 0 0% 100%;
+      --popover-foreground: 205 22% 11%;
+
+      --primary: 205 22% 11%;
+      --primary-foreground: 0 0% 100%;
+
+      --secondary: 205 20% 96%;
+      --secondary-foreground: 205 22% 11%;
+
+      --muted: 205 20% 96%;
+      --muted-foreground: 205 10% 38%;
+
+      --accent: 205 20% 96%;
+      --accent-foreground: 205 22% 11%;
+
+      --destructive: 358 65% 46%;
+      --destructive-foreground: 0 0% 100%;
+
+      --border: 205 16% 88%;
+      --input: 205 16% 84%;
+      --ring: 185 80% 28%;
+
+      --sidebar-background: 205 20% 98%;
+      --sidebar-foreground: 205 12% 30%;
+      --sidebar-primary: 205 22% 14%;
+      --sidebar-primary-foreground: 0 0% 100%;
+      --sidebar-accent: 205 20% 95%;
+      --sidebar-accent-foreground: 205 22% 14%;
+      --sidebar-border: 205 16% 88%;
+      --sidebar-ring: 185 80% 28%;
+
+      --terminal-accent: 185 85% 25%;
+      --terminal-key: 21 88% 38%;
+
+      /* Pitched between the two accents: the cursor and the reading bar cross
+         the white page and the black navbar without a stop in between. */
+      --terminal-accent-vivid: 185 72% 40%;
+    }
   }
 }
 
@@ -105,6 +174,19 @@
   }
 }
 
+/* The pixel bone cursor is dragged across the page itself, so it flips with
+   the page. Held whole rather than assembled from a fill colour, because a
+   data URI cannot be built out of custom properties. */
+:root {
+  --bone-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23fff%7D%3C/style%3E%3Crect x='2' y='6' width='12' height='4'/%3E%3Crect x='0' y='4' width='4' height='2'/%3E%3Crect x='0' y='10' width='4' height='2'/%3E%3Crect x='12' y='4' width='4' height='2'/%3E%3Crect x='12' y='10' width='4' height='2'/%3E%3C/svg%3E") 8 8, auto;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bone-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%2316201f%7D%3C/style%3E%3Crect x='2' y='6' width='12' height='4'/%3E%3Crect x='0' y='4' width='4' height='2'/%3E%3Crect x='0' y='10' width='4' height='2'/%3E%3Crect x='12' y='4' width='4' height='2'/%3E%3Crect x='12' y='10' width='4' height='2'/%3E%3C/svg%3E") 8 8, auto;
+  }
+}
+
 /* Hide default cursor on desktop when custom cursor is active */
 @media (pointer: fine) {
   * {
@@ -114,6 +196,6 @@
   /* Pixel bone cursor when dog is chasing */
   .bone-cursor,
   .bone-cursor * {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cstyle%3Erect%7Bfill:%23fff%7D%3C/style%3E%3Crect x='2' y='6' width='12' height='4'/%3E%3Crect x='0' y='4' width='4' height='2'/%3E%3Crect x='0' y='10' width='4' height='2'/%3E%3Crect x='12' y='4' width='4' height='2'/%3E%3Crect x='12' y='10' width='4' height='2'/%3E%3C/svg%3E") 8 8, auto !important;
+    cursor: var(--bone-cursor) !important;
   }
 }
