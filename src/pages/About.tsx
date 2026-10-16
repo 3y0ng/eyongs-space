@@ -41,7 +41,7 @@ const About = () => {
 
         <div ref={statsRef} className="mb-16">
           <MacWindow
-            title="~/eyong — stats.sh"
+            title="~/eyong/stats.sh"
             bodyClassName="p-6 font-mono text-sm"
           >
           <div className="text-muted-foreground mb-2">

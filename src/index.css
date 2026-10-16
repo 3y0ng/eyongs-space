@@ -199,3 +199,182 @@
     cursor: var(--bone-cursor) !important;
   }
 }
+
+/* ───────────────────────── Glass ─────────────────────────
+
+   Quiet, gallery-like glass. Raised surfaces (the nav, windows, the footer)
+   are frosted panes with a hairline edge over a near-still ambient field
+   (see Ambient.tsx). Colour only appears where the pointer is: a pane under
+   it catches a faint sliver of split light along its edge.
+
+     .glass        the frosted body: translucent fill, blur, a lit top edge
+     .glass-row    a list row, flat until hovered, then the same pane
+     ::before      the rim: a 1px band of split light, masked to the border,
+                   centred on the pointer and shown only on hover */
+
+/* Shared with .dark for the same reason the palette is: everything carrying
+   .dark is chrome, and keeps the dark glass whichever way the page flips. */
+:root,
+.dark {
+  --glass-fill: 205 22% 9% / 0.42;
+  --glass-fill-strong: 205 22% 7% / 0.62;
+  --glass-edge: 0 0% 100% / 0.09;
+  --glass-highlight: 0 0% 100% / 0.07;
+  --glass-shadow: 0 1px 0 0 hsl(0 0% 100% / 0.06) inset,
+    0 24px 48px -24px hsl(205 60% 2% / 0.8),
+    0 8px 16px -8px hsl(205 60% 2% / 0.5);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) {
+    --glass-fill: 0 0% 100% / 0.5;
+    --glass-fill-strong: 0 0% 100% / 0.72;
+    --glass-edge: 205 30% 20% / 0.08;
+    --glass-highlight: 0 0% 100% / 0.7;
+    --glass-shadow: 0 1px 0 0 hsl(0 0% 100% / 0.9) inset,
+      0 24px 48px -28px hsl(205 40% 30% / 0.28),
+      0 6px 14px -8px hsl(205 40% 30% / 0.16);
+  }
+}
+
+/* Dark chrome laid over a white page: any real translucency lets the white
+   through and the pane goes flat grey, so here it is nearly solid; the
+   glass survives in the lit edge and the shadow. */
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) .dark {
+    --glass-fill: 205 22% 5% / 0.94;
+    --glass-fill-strong: 205 22% 5% / 0.95;
+    --glass-shadow: 0 1px 0 0 hsl(0 0% 100% / 0.08) inset,
+      0 24px 48px -24px hsl(205 40% 20% / 0.45),
+      0 8px 16px -8px hsl(205 40% 20% / 0.3);
+  }
+}
+
+@layer components {
+  .glass {
+    position: relative;
+    isolation: isolate;
+    background:
+      linear-gradient(160deg, hsl(var(--glass-highlight)) 0%, transparent 38%),
+      hsl(var(--glass-fill));
+    /* The edge is an inset shadow rather than a border, so a pane that clips
+       its content (a window) does not clip its own rim with it. */
+    box-shadow: inset 0 0 0 1px hsl(var(--glass-edge)), var(--glass-shadow);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    backdrop-filter: blur(22px) saturate(170%);
+  }
+
+  .glass-strong {
+    background:
+      linear-gradient(160deg, hsl(var(--glass-highlight)) 0%, transparent 38%),
+      hsl(var(--glass-fill-strong));
+  }
+
+  /* A list row: flat until the pointer finds it, then it lifts into a pane.
+     Keeps a long list from reading as a stack of identical frames. */
+  .glass-row {
+    position: relative;
+    isolation: isolate;
+    background: transparent;
+    -webkit-backdrop-filter: blur(0px) saturate(100%);
+    backdrop-filter: blur(0px) saturate(100%);
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.3s ease,
+      backdrop-filter 0.3s ease,
+      transform 0.3s ease-out;
+  }
+
+  .glass-row:hover {
+    background:
+      linear-gradient(160deg, hsl(var(--glass-highlight)) 0%, transparent 38%),
+      hsl(var(--glass-fill));
+    box-shadow: inset 0 0 0 1px hsl(var(--glass-edge)), var(--glass-shadow);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    backdrop-filter: blur(22px) saturate(170%);
+  }
+
+  /* The rim. Ambient.tsx tells each pane where the pointer sits in its own
+     coordinates (--lx / --ly); the band is white at the pointer, through
+     cyan to violet, gone within a few hundred pixels. Hidden until hover. */
+  .glass::before,
+  .glass-row::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+      circle at var(--lx, -10vw) var(--ly, -10vh),
+      hsl(0 0% 100% / 0.85) 0px,
+      hsl(185 90% 62%) 110px,
+      hsl(220 90% 68% / 0.8) 220px,
+      hsl(275 85% 72% / 0.5) 330px,
+      transparent 460px
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+  }
+
+  .glass-row:hover::before,
+  .glass-interactive:hover::before {
+    opacity: 0.35;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glass-row { transition: none; }
+  }
+}
+
+/* ─── Ambient field ─── */
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: hsl(var(--background));
+}
+
+/* Three still, barely-there fields of colour, so the frost has something
+   to soften. */
+.ambient-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.14;
+}
+
+.ambient-orb--teal {
+  width: 46vmax; height: 46vmax;
+  left: -12vmax; top: -14vmax;
+  background: radial-gradient(circle, hsl(185 85% 45%), transparent 65%);
+}
+
+.ambient-orb--violet {
+  width: 40vmax; height: 40vmax;
+  right: -14vmax; top: 18vh;
+  background: radial-gradient(circle, hsl(265 75% 58%), transparent 65%);
+}
+
+.ambient-orb--ember {
+  width: 34vmax; height: 34vmax;
+  left: 18vw; bottom: -18vmax;
+  background: radial-gradient(circle, hsl(21 94% 60%), transparent 65%);
+  opacity: 0.1;
+}
+
+/* Film grain, so the gradients never band. */
+.ambient-grain {
+  position: absolute;
+  inset: -50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+}

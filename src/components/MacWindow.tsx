@@ -147,12 +147,12 @@ const MacWindow = ({
 
   if (closed) {
     return (
-      <div className={`dark ${className}`}>
+      <div className={`dark text-foreground ${className}`}>
         <button
           type="button"
           data-hoverable
           onClick={() => setClosed(false)}
-          className="group flex items-center gap-2.5 rounded-md border border-border bg-card px-3 py-2 font-mono text-xs text-muted-foreground transition-colors duration-200 hover:border-muted-foreground/40 hover:text-foreground motion-reduce:transition-none"
+          className="glass glass-interactive group flex items-center gap-2.5 rounded-full px-3.5 py-2 font-mono text-xs text-muted-foreground transition-colors duration-200 hover:text-foreground motion-reduce:transition-none"
         >
           <span
             className="h-2.5 w-2.5 shrink-0 rounded-full"
@@ -173,7 +173,7 @@ const MacWindow = ({
   return (
     <div
       ref={frameRef}
-      className={`dark relative ${zoomed ? zoomClassName : ""} ${
+      className={`dark relative text-foreground ${zoomed ? zoomClassName : ""} ${
         dragging
           ? "z-30"
           : "z-20 transition-[transform,margin] duration-300 ease-out motion-reduce:transition-none"
@@ -184,10 +184,8 @@ const MacWindow = ({
       }}
     >
       <div
-        className={`overflow-hidden rounded-lg border border-border bg-card transition-shadow duration-200 motion-reduce:transition-none ${
-          dragging
-            ? "shadow-2xl ring-1 ring-terminal-accent/25"
-            : "shadow-lg shadow-black/20"
+        className={`glass glass-interactive overflow-hidden rounded-xl transition-transform duration-200 motion-reduce:transition-none ${
+          dragging ? "scale-[1.01]" : ""
         }`}
       >
         <div
@@ -197,7 +195,7 @@ const MacWindow = ({
           onPointerCancel={endDrag}
           onDoubleClick={toggleZoom}
           data-hoverable={draggable ? "" : undefined}
-          className="relative flex h-9 select-none items-center border-b border-border bg-secondary/50 px-3 touch-none"
+          className="relative z-[2] flex h-9 select-none items-center border-b border-white/[0.06] bg-white/[0.025] px-3 touch-none"
         >
           <div className="group/lights flex shrink-0 items-center gap-2">
             {(["close", "minimize", "zoom"] as Light[]).map((kind) => (
@@ -233,7 +231,7 @@ const MacWindow = ({
           }`}
         >
           <div className="overflow-hidden">
-            <div className={bodyClassName}>{children}</div>
+            <div className={`relative z-[2] ${bodyClassName}`}>{children}</div>
           </div>
         </div>
       </div>

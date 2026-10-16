@@ -4,7 +4,7 @@ import leeEducationScreenshot from "@/assets/lee-education-screenshot.png";
 import pyreelScreenshot from "@/assets/pyreel-screenshot.jpg";
 import grandpaSiteScreenshot from "@/assets/grandpa-site-screenshot.png";
 
-export type ProjectStatus = "Active" | "Shipped" | "Exploring";
+export type ProjectStatus = "Active" | "Shipped" | "Exploring" | "Explored";
 
 export interface Project {
   id: string;
@@ -22,7 +22,7 @@ export const projects: Project[] = [
     id: "pyreel",
     title: "Pyreel",
     tagline: "Reinforcement learning for paid media",
-    description: "A closed-loop optimization engine for paid marketing. Every impression, click, and conversion feeds a unified analytics layer, and a reinforcement learning policy reads those signals to reallocate spend across creatives, audiences, and placements — so every campaign becomes the training data for the next one.",
+    description: "A closed-loop optimization engine for paid marketing. Every impression, click, and conversion feeds a unified analytics layer, and a reinforcement learning policy reads those signals to reallocate spend across creatives, audiences, and placements, so every campaign becomes the training data for the next one.",
     status: "Active",
     color: "hsl(var(--primary))",
     link: "https://pyreel.com",
@@ -33,7 +33,7 @@ export const projects: Project[] = [
     title: "Curilo",
     tagline: "Instant feedback loops for English writing",
     description: "An automated English writing platform that solves the \"feedback lag\" in traditional tutoring. Built to productize a tutoring business, using LLMs to create instant feedback loops and dynamic lesson plans based on student-specific skill gaps.",
-    status: "Active",
+    status: "Explored",
     color: "hsl(var(--primary))",
     link: "https://curilo.ai",
     image: curiloScreenshot,
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     id: "grandpa-site",
     title: "Grandpa site",
     tagline: "A little site I made for my grandpa",
-    description: "An accessible web portal built for my grandfather, an 80-year-old Mandarin/Hokkien speaker in Singapore. Combines news with text-to-speech, a TV interface with curated channels, games, and weather — designed to prioritize simplicity over technical complexity.",
+    description: "An accessible web portal built for my grandfather, an 80-year-old Mandarin/Hokkien speaker in Singapore. Combines news with text-to-speech, a TV interface with curated channels, games, and weather, designed to prioritize simplicity over technical complexity.",
     status: "Shipped",
     color: "hsl(var(--secondary))",
     link: "https://3y0ng.github.io/grandpa-sg-site/",

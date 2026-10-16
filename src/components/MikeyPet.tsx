@@ -53,6 +53,11 @@ const FACTS = [
 type DogState = "idle" | "walk" | "run" | "sleep";
 
 const DOG_SIZE = 56;
+// Every frame is fit into the same DOG_SIZE box, so a frame's on-screen scale
+// depends on its widest side. The sit frames (199x200) are squarer than the
+// walk frames (218x190) and would come out ~9% bigger, so they are shrunk
+// back to the walk's scale to keep Mikey's head the same size in both.
+const SIT_SCALE = 200 / 218;
 const WALK_SPEED = 1.5;
 const RUN_SPEED = 3.5;
 const CHASE_THRESHOLD = 450; // px — start walking toward mouse (2D distance)
@@ -414,8 +419,9 @@ const MikeyPet = ({ onDismiss }: MikeyPetProps) => {
           style={{
             imageRendering: "pixelated",
             objectFit: "contain",
-            transform:
-              dogState === "walk" || facingRight ? "scaleX(1)" : "scaleX(-1)",
+            transform: `scaleX(${
+              dogState === "walk" || facingRight ? 1 : -1
+            }) scale(${dogState === "idle" ? SIT_SCALE : 1})`,
             opacity: 1,
           }}
           draggable={false}
