@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import Ambient from "@/components/Ambient";
 import EasterEgg from "@/components/EasterEgg";
 import CommandPalette from "@/components/CommandPalette";
 import Index from "./pages/Index";
@@ -24,6 +25,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <Ambient />
         <CustomCursor />
         <CommandPalette />
         <Navbar />

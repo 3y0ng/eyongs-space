@@ -6,17 +6,17 @@ const Essays = () => {
   return (
     <PageTransition>
       <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
-        <h1 className="font-display text-4xl mb-2">Essays</h1>
+        <h1 className="font-display text-4xl md:text-5xl mb-3">Essays</h1>
         <p className="text-muted-foreground mb-12">Thoughts on building, creating, and figuring things out.</p>
 
-        <div>
+        <div className="-mx-5 space-y-1">
           {essays.map((essay) => (
             <Link
               key={essay.id}
               to={`/essays/${essay.id}`}
-              className="group block py-5 border-b border-border last:border-0"
+              className="glass-row group block rounded-xl px-5 py-4 hover:-translate-y-0.5"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="relative z-[2] flex items-start justify-between gap-4">
                 <div>
                   <h3 className="font-medium group-hover:underline underline-offset-4">
                     {essay.title}

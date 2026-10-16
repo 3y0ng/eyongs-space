@@ -6,6 +6,7 @@ const statusColor: Record<string, string> = {
   Active: "text-terminal-accent",
   Shipped: "text-muted-foreground",
   Exploring: "text-terminal-key",
+  Explored: "text-muted-foreground",
 };
 
 const ProjectCard = ({ project, showPreview = true }: { project: Project; showPreview?: boolean }) => {
@@ -15,28 +16,28 @@ const ProjectCard = ({ project, showPreview = true }: { project: Project; showPr
     const el = cardRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    el.style.transform = `translate(${x * 0.04}px, ${y * 0.06}px)`;
-    el.style.boxShadow = `0 0 20px -8px hsl(var(--terminal-accent) / 0.15)`;
+    // -0.5…0.5 across the card. The pane tips away from the pointer, as if
+    // pressed there, and drifts toward it a touch so it still feels magnetic.
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(900px) translate3d(${nx * 6}px, ${ny * 4}px, 0) rotateX(${-ny * 5}deg) rotateY(${nx * 5}deg)`;
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     const el = cardRef.current;
     if (!el) return;
     el.style.transform = "";
-    el.style.boxShadow = "";
   }, []);
 
   return (
     <Link
       ref={cardRef}
       to={`/projects/${project.id}`}
-      className="group block py-5 border-b border-border last:border-0 relative transition-[transform,box-shadow] duration-200"
+      className="glass-row group block rounded-xl px-5 py-4"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="relative z-[2] flex items-start justify-between gap-4">
         <div>
           <h3 className="font-medium group-hover:underline underline-offset-4 transition-all">
             {project.title}
@@ -54,7 +55,7 @@ const ProjectCard = ({ project, showPreview = true }: { project: Project; showPr
           <img
             src={project.image}
             alt={`${project.title} preview`}
-            className="w-48 rounded-md border border-border shadow-lg"
+            className="w-48 rounded-lg shadow-2xl shadow-black/40 ring-1 ring-white/10"
           />
         </div>
       )}

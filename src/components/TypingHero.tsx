@@ -24,8 +24,6 @@ const lines = [
     { text: 'building', cls: 'text-terminal-key' },
     { text: ': [', cls: 'text-muted-foreground' },
     { text: '"pyreel.com"', cls: 'text-foreground' },
-    { text: ', ', cls: 'text-muted-foreground' },
-    { text: '"curilo.ai"', cls: 'text-foreground' },
     { text: '],', cls: 'text-muted-foreground' },
   ]},
   { indent: true, parts: [
@@ -136,7 +134,7 @@ const TypingHero = () => {
 
   return (
     <MacWindow
-      title="~/eyong — status.sh"
+      title="~/eyong/status.sh"
       className="mb-6"
       bodyClassName="p-6 font-mono text-sm min-h-[200px]"
     >

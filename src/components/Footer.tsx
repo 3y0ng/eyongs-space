@@ -54,8 +54,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="dark border-t border-border bg-background text-foreground mt-32">
-      <div className="max-w-3xl mx-auto px-6 py-12">
+    <footer className="dark text-foreground mt-32 px-3 pb-6">
+      <div className="glass max-w-3xl mx-auto rounded-2xl px-6 py-10 sm:px-8">
+        <div className="relative z-[2]">
         {/* Newsletter */}
         <div className="mb-10">
           <p className="text-sm font-medium mb-1">Newsletter</p>
@@ -70,12 +71,12 @@ const Footer = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@email.com"
                 required
-                className="flex-1 h-9 rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                className="flex-1 h-9 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm shadow-[inset_0_1px_2px_hsl(0_0%_0%/0.3)] placeholder:text-muted-foreground/70 focus:outline-none focus:ring-1 focus:ring-ring"
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="h-9 px-4 rounded-md bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="h-9 px-4 rounded-lg bg-foreground text-background text-sm font-medium shadow-[0_0_24px_-6px_hsl(var(--terminal-accent)/0.6)] hover:opacity-90 transition-opacity disabled:opacity-50"
               >
                 {loading ? "..." : "Subscribe"}
               </button>
@@ -96,6 +97,7 @@ const Footer = () => {
         <p className="font-mono text-xs text-muted-foreground mt-6">
           last commit: {new Date().toISOString().slice(0, 10)}
         </p>
+        </div>
       </div>
     </footer>
   );
